@@ -1,6 +1,2 @@
-node
+#application for node training
 ====
-
-application for node training
-
-applications  forum:
