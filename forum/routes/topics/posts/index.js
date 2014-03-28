@@ -28,7 +28,8 @@ exports.show = function(req, res, next) {
 	var post_id = req.param('post_id');
 	PostModel.findById(post_id, function(err, result) {
 		if (err) {
-			//pending
+			//error page
+			return next(err);
 		}
 
 		if (!result) {
@@ -54,6 +55,7 @@ exports.delete = function(req, res, next) {
 	PostModel.remove(condition, function(err, result) {
 		if (err) {
 			//pending
+			return next(err);
 		}
 
 		if (result === 0 ) {

@@ -45,7 +45,8 @@ exports.show = function(req, res, next) {
 
 	PostModel.where('topic_id', topic_id).run(function(err, result) {
 		if (err) {
-			//pending
+			//エラーをnext()二投げるとエラーページに遷移
+			return next(err);
 		}
 
 		res.render('topics/show', {

@@ -11,3 +11,12 @@ exports.helpers = {
 		return text.replace(/ /g, '&nbsp;').replace(/\r\n|\n\r/g, '<br />');
 	}
 };
+
+// Error handler
+exports.errorHandler = function(err, req, res) {
+	res.render('err', {
+		status: 500,
+		title: '500 internal server error',
+		err: err
+	});
+};

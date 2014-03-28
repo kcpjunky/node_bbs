@@ -72,5 +72,9 @@ app.get('/topics', routes.topics.index);
 
 app.del('/topics/:topic_id/posts/:post_id', routes.topics.posts.delete);
 
+
+//error handler
+app.error(lib.errorHandler);
+
 app.listen(3000);
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
