@@ -1,5 +1,21 @@
-// View helper
+var util = require('util');
 
+//error
+//404 error
+function NotFound(path) {
+	Error.call(this, 'Not Found');
+	Error.captureStackTrace(this, this.constructor); // スタックトレースの格納
+	this.name = 'NotFound';
+	this.path = path;
+}
+
+//NotFoundをErrorに継承させる
+util.inherits(NotFound, Error);
+
+exports.NotFound = NotFound;
+
+
+// View helper
 exports.helpers = {
 	// urlと名前からリンク作成
 	link_to: function(name, url) {
@@ -20,3 +36,17 @@ exports.errorHandler = function(err, req, res) {
 		err: err
 	});
 };
+
+// NotFoundのエラーハンドラ
+exports.notFoundHandler = function(err, req, res, next) {
+	if (err instanceof NotFound) {
+		res.render('err', {
+			status: 404,
+			title: '404 page not found',
+			err: err
+		});
+	} else {
+		return next(err);
+	}
+};
+

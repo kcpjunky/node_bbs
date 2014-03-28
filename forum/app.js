@@ -74,6 +74,8 @@ app.del('/topics/:topic_id/posts/:post_id', routes.topics.posts.delete);
 
 
 //error handler
+//next(err)で順番にapp.errorを処理
+app.error(lib.notFoundHandler);
 app.error(lib.errorHandler);
 
 app.listen(3000);
