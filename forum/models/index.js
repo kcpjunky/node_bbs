@@ -1,5 +1,5 @@
-var mongoose = require('mongoose');
-
+var mongoose = require('mongoose'),
+	utils = require('CONNECT').utils;
 exports.init = function(host, db) {
 	mongoose.connect('mongodb://' + host + '/' + db);
 };
@@ -24,3 +24,27 @@ var PostSchema = new Schema({
 });
 
 exports.PostModel =  mongoose.model('Post', PostSchema);
+
+function getAuthCookie() {
+	return utils.uid(32);
+}
+
+exports.getAuthCookie = getAuthCookie;
+
+var UserSchema = new Schema({
+	username: { type: String, required: true, unique: true},
+	password: { type: String, required: true},
+	authcookie: { type: String, required: true, default: getAuthCookie },
+	created_at: { type: Date, default: Date.now }
+});
+
+UserSchema.methods.setPassword = function(password, password2) {
+	if (password === password2) {
+		this.password = password;
+		return true;
+	}
+	this.invalidate('password_mismach', new Error('Password mismatch'));
+	return false;
+};
+
+exports.UserModel = mongoose.model('User', UserSchema);

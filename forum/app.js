@@ -72,9 +72,12 @@ app.get('/topics', routes.topics.index);
 
 app.del('/topics/:topic_id/posts/:post_id', routes.topics.posts.delete);
 
+app.post('/users', routes.users.create);
+
 //登録フォーム
 app.get('/sessions/new', routes.sessions.new);
 
+app.post('/sessions', routes.sessions.create);
 
 //error handler
 //next(err)で順番にapp.errorを処理
@@ -83,3 +86,5 @@ app.error(lib.errorHandler);
 
 app.listen(3000);
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
+
+
