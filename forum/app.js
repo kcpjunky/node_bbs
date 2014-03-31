@@ -21,7 +21,6 @@ app.configure(function(){
   app.use(express.session({ secret: 'your secret here' }));
   app.use(app.router);
   app.use(express.static(__dirname + '/public'));
-
   app.redirect('top', '/topics');
 });
 
@@ -45,6 +44,10 @@ app.configure('test', function() {
 
 //View Helper
 app.helpers(lib.helpers);
+
+
+//Dynamic view helper
+app.dynamicHelpers(lib.dynamicHelpers);
 
 // Routes
 
@@ -77,7 +80,13 @@ app.post('/users', routes.users.create);
 //登録フォーム
 app.get('/sessions/new', routes.sessions.new);
 
+app.get('/sessions/destroy', routes.sessions.delete);
+
+//login
 app.post('/sessions', routes.sessions.create);
+
+
+
 
 //error handler
 //next(err)で順番にapp.errorを処理

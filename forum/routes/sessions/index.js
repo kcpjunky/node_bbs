@@ -20,7 +20,15 @@ exports.create = function(req, res) {
 			return res.redirect('back');
 		}
 
-		console.log(result);
+		//console.log(result);
+		
+		req.session.username = result.username;
+		
 		res.redirect('top');
 	});
+};
+
+exports.delete = function(req, res) {
+	req.session.destroy();
+	res.redirect('./sessions/new');
 };

@@ -28,6 +28,18 @@ exports.helpers = {
 	}
 };
 
+//dynamic view helper
+exports.dynamicHelpers = {
+	username_or_login: function(req, res) {
+		if (req.session.username) {
+			return '' + '<p class="login_user">Login as ' + req.session.username + '</p>'
+					+ '<p class="logout"><a href="/sessions/destroy">logout</a></p>';
+		}
+		return '<p class="login"><a href="/sessions/new">login</a></p>';
+	}
+};
+
+
 // Error handler
 exports.errorHandler = function(err, req, res) {
 	res.render('err', {

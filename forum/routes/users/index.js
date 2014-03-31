@@ -31,8 +31,10 @@ exports.create = function(req, res, next) {
 		return next(err);
 		}
 
-		console.log(result);
-		res.redirect('top');
+	//	console.log(result);
+	
+	req.session.username = result.username;
+	res.redirect('top');
 		
 	});
 };
