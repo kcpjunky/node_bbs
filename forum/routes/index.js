@@ -9,3 +9,5 @@ exports.index = function(req, resi, next){
 };
 
 exports.topics = require('./topics');
+
+exports.sessions = require('./sessions');

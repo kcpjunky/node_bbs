@@ -72,6 +72,9 @@ app.get('/topics', routes.topics.index);
 
 app.del('/topics/:topic_id/posts/:post_id', routes.topics.posts.delete);
 
+//登録フォーム
+app.get('/sessions/new', routes.sessions.new);
+
 
 //error handler
 //next(err)で順番にapp.errorを処理
