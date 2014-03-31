@@ -36,6 +36,22 @@ exports.dynamicHelpers = {
 					+ '<p class="logout"><a href="/sessions/destroy">logout</a></p>';
 		}
 		return '<p class="login"><a href="/sessions/new">login</a></p>';
+	},
+	message: function(req, res) {
+		return function(type) {
+			var messages = req.flash(type);
+			if (!messages) {
+				return '';
+			}
+			var buf = '<ul class = "message ' + type + '">';
+			messages.forEach(function(msg) {
+				var li = '<li>' + msg + '</li>';
+				buf += li;
+			});
+			buf += '</ul>';
+			return buf;
+		};
+	
 	}
 };
 

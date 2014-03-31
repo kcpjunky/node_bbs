@@ -14,15 +14,20 @@ exports.create = function(req, res, next) {
 		if (err) {
 			if (err === 11000) {
 				//ユーザー名重複
+				req.flash('registerErr', 'username already exist!');
+				req.flash('registerErr', 'select another username1');
 				return res.redirect('back');
 			}
 
 			if (err.name === 'ValidationError') {
 				if (err.errors.password_mismatch) {
 					//パスワードミスマッチ
+
+					req.flash('registerErr', 'two passwords doesn\'t match!');
 					console.log("invalid passowrd");
 				} else {
 					// その他エラー
+					req.flash('registerErr', 'check your inputs again!');
 				}
 			
 				return res.redirect('back');

@@ -2,7 +2,8 @@
 	<p id="pagetitle">
 		<%= title %>
 	</p>
-
+	<%- message('deleteErr') %>
+	<%- message('getPostErr') %>
 	<%- partial('../partials/post.ejs', { collection : posts}) %>
 	
 	<p class="move_top"><a href="#wrap">move top</a></p>
@@ -11,6 +12,7 @@
 <section class="box_effect">
 	<form id="input" action="/topics/<%= topic_id %>/posts" method="POST">
 		<div>
+		<%- message('postErr') %>
 			<p><label for="input_title">title</label></p>
 			<p><input id="input_title" type="text" name="title" size="50" placeholder="title">
 			</p>

@@ -18,8 +18,16 @@ exports.create = function(req, res, next) {
 	});
 
 	post.save(function(err, result) {
-		console.log(result);
-		res.redirect('back');
+	//console.log(result);
+	
+		if (err) {
+			if (err.name == 'ValidationError') {
+				req.flash('postErr', 'invalid input');
+
+				return res.redirect('back');
+			}
+			return next(err);
+		}
 	});
 };
 
@@ -33,6 +41,9 @@ exports.show = function(req, res, next) {
 		}
 
 		if (!result) {
+
+			//結果が取得できなかったとき
+			req.flash('getPostErr', 'Can\'t get this post');
 			return res.redirect('back');
 		}
 
@@ -59,6 +70,7 @@ exports.delete = function(req, res, next) {
 		}
 
 		if (result === 0 ) {
+			req.flash('deleteErr', 'Can\'t delete this topic');
 			return res.redirect('back');
 		}
 		res.redirect('/topics/' + topic_id);

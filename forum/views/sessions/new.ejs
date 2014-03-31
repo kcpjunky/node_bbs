@@ -1,6 +1,7 @@
 <div id="auth_form" class="clear">
 	<form id="login" action="/sessions" method="post" class="box_effect">
 		<h2>login</h2>
+		<%- message('loginErr') %>
 		<div class="inputs">
 			<p><label for="login_username">username</label></p>
 			<p><input id="login_username" type="text" name="username" size="30" placeholder="username"></p>
@@ -17,6 +18,7 @@
 
 	<form id="register" action="/users" method="post" class="box_effect">
 		<h2> Create Account</h2>
+		<%- message('registerErr') %>
 		<div class="inputs">
             <p><label for="register_username">username</label></p>
 			<p><input id="register_username" type="text" name="username" size="30" placeholder="username"></p>			            
