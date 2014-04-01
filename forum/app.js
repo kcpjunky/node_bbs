@@ -50,8 +50,8 @@ app.helpers(lib.helpers);
 app.dynamicHelpers(lib.dynamicHelpers);
 
 // Routes
-
-app.get('/', routes.index);
+//トップページに飛ぶ前にログイン確認
+app.get('/', lib.loginRequired, routes.index);
 
 app.get('/topics/:topic_id?', routes.topics.show);
 //パラメータがないときはindexに飛ばしたいときnextを使う

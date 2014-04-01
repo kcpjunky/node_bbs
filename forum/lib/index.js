@@ -1,4 +1,3 @@
-"use strict";
 var util = require('util');
 
 //error
@@ -79,3 +78,12 @@ exports.notFoundHandler = function(err, req, res, next) {
 	}
 };
 
+//Route-Middleware
+//ログイン状態の判定
+exports.loginRequired = function(req, res, next) {
+	if (req.session.username) {
+		return next();
+	}
+
+	res.redirect('/sessions/new');
+};
