@@ -1,5 +1,7 @@
 var models = require('../../models'),
+	lib = require('../../lib'),
 	User = models.UserModel;
+
 
 exports.new = function(req, res, next) {
 	res.render('sessions/new', {
@@ -12,6 +14,7 @@ exports.create = function(req, res) {
 		username: req.param('username'),
 		password: req.param('password')
 	};
+	var rememberme = req.param('rememberme');
 	User.findOne(condition, function(err, result) {
 		if (err) {
 			return next(err);
@@ -21,15 +24,26 @@ exports.create = function(req, res) {
 			return res.redirect('back');
 		}
 
+		if (rememberme) {
+			//cookieを保存
+			var newtoken = {
+				username: result.username,
+				authcookie: result.authcookie
+			};
+			lib.setCookie(res, JSON.stringfy(newtoken));
+		}
+
 		//console.log(result);
-		
+
 		req.session.username = result.username;
-		
+
 		res.redirect('top');
 	});
 };
 
 exports.delete = function(req, res) {
 	req.session.destroy();
+
+	res.clearCookie('authtoken', {path: '/'});
 	res.redirect('./sessions/new');
 };

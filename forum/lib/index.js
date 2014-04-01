@@ -1,5 +1,13 @@
-var util = require('util');
+var util = require('util'),
+		models = require('../models'),
+		user = models.UserModel;
 
+var setCookie = exports.setCookie = function(res, val) {
+	res.cookie('authtoken', val, {
+		path: '/',
+		expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7)
+	});
+};
 //error
 //404 error
 function NotFound(path) {
@@ -51,9 +59,10 @@ exports.dynamicHelpers = {
 			buf += '</ul>';
 			return buf;
 		};
-	
+
 	}
 };
+
 
 
 // Error handler
@@ -82,8 +91,48 @@ exports.notFoundHandler = function(err, req, res, next) {
 //ログイン状態の判定
 exports.loginRequired = function(req, res, next) {
 	if (req.session.username) {
-		return next();
+			return next();
 	}
 
 	res.redirect('/sessions/new');
+	if (!req.cookies.authtoken) {
+			//sessionもcookieもない場合、ログインページにリダイレクト
+			return res.redirect('/sessions/new');
+	}
+
+	//cookieがある場合
+	var token = JSON.parse(req.cookies.authtoken);
+	var condition = {
+		username: token.username,
+		authcookie: token.authcookie
+	}
+
+	//cookieを用いて認証する
+	User.findOne(condition, function(err, result) {
+		if (err) {
+			return next(err);
+		}
+
+		if (!result) {
+			return res.redirect('/sessions/new');
+		}
+
+		var update = { authcookie: models.getAuthCookie()};
+
+		User.update(condition, update, function(err, numAffected) {
+			if (err) {
+				return next(err);
+			}
+
+			req.session.username = result.username;
+			var newtoken = {
+				username: result.username,
+				authcookie: update.authcookie
+
+			};
+
+			setCookie(res, JSON.stringify(newtoken));
+			next();
+		});
+	});
 };

@@ -1,10 +1,12 @@
 var models = require('../../models'),
+	lib = require('../../lib'),
 	User = models.UserModel;
 
 exports.create = function(req, res, next) {
 	var username = req.param('username'),
 		password = req.param('password'),
-		password2 = req.param('password2');
+		password2 = req.param('password2'),
+		rememberme = req.param('rememberme');
 
 	var user = new User({
 		username: username
@@ -29,18 +31,25 @@ exports.create = function(req, res, next) {
 					// その他エラー
 					req.flash('registerErr', 'check your inputs again!');
 				}
-			
+
 				return res.redirect('back');
 			}
 
 		return next(err);
 		}
 
+		if (rememberme) {
+			var newtoken = {
+				username: result.username,
+				authcookie: result.authcookie
+
+			};
+			lib.setCookie(res, JSON.stringify(newtoken));
+		}
 	//	console.log(result);
-	
+
 	req.session.username = result.username;
 	res.redirect('top');
-		
+
 	});
 };
-

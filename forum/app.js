@@ -64,12 +64,12 @@ app.get('/topics/:topic_id?', routes.topics.show);
 //});
 
 //個別ページ
-app.get('/topics/:topic_id/posts/:post_id', routes.topics.posts.show);
+app.get('/topics/:topic_id/posts/:post_id', lib.loginRequired, routes.topics.posts.show);
 
 app.post('/topics/:topic_id/posts', routes.topics.posts.create);
 
 
-app.get('/topics', routes.topics.index);
+app.get('/topics', lib.loginRequired, routes.topics.index);
 
 //app.get('/topics/:topic_id?', routes.topics.index);
 
