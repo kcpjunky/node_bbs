@@ -32,6 +32,7 @@ exports.index = function(req, res) {
 exports.show = function(req, res, next) {
 	console.log("show");	
 
+
 	//topic_idを数字に変換する
 	var topic_id = parseInt(req.param('topic_id'), 10);
 

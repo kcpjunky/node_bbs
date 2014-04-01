@@ -90,11 +90,12 @@ exports.notFoundHandler = function(err, req, res, next) {
 //Route-Middleware
 //ログイン状態の判定
 exports.loginRequired = function(req, res, next) {
+	console.log("loginRequired");
 	if (req.session.username) {
 			return next();
 	}
 
-	res.redirect('/sessions/new');
+//	res.redirect('/sessions/new');
 	if (!req.cookies.authtoken) {
 			//sessionもcookieもない場合、ログインページにリダイレクト
 			return res.redirect('/sessions/new');
