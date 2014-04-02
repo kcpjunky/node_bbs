@@ -18,7 +18,16 @@ app.configure(function(){
   app.use(express.bodyParser());
   app.use(express.methodOverride('_method'));
   app.use(express.cookieParser());
-  app.use(express.session({ secret: 'your secret here' }));
+
+  //app.use(express.session({ secret: 'your secret here' }));
+  //ブラウザ閉じるごとにクッキー削除
+  app.use(express.session({
+  	secret: 'your secret here',
+	cookie: {
+		maxAge: false
+	}
+  }));
+
   app.use(app.router);
   app.use(express.static(__dirname + '/public'));
   app.redirect('top', '/topics');
@@ -51,7 +60,8 @@ app.dynamicHelpers(lib.dynamicHelpers);
 
 // Routes
 //トップページに飛ぶ前にログイン確認
-app.get('/', lib.loginRequired, routes.index);
+//app.get('/', lib.loginRequired, routes.index);
+app.get('/', routes.index);
 
 app.get('/topics/:topic_id?', routes.topics.show);
 //パラメータがないときはindexに飛ばしたいときnextを使う

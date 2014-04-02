@@ -3,6 +3,7 @@ var models = require('../../../models'),
     PostModel = models.PostModel;
 
 exports.create = function(req, res, next) {
+	console.log("topics/posts//create");
 	var topic_id = req.param('topic_id');
 	var title = req.param('title');
 	var detail = req.param('detail');
@@ -14,12 +15,13 @@ exports.create = function(req, res, next) {
 	var post = new PostModel({
 		topic_id: topic_id,
 		title: title,
-		detail: detail
+		detail: detail,
+		username: req.session.username
 	});
 
 	post.save(function(err, result) {
 	//console.log(result);
-	
+
 		if (err) {
 			if (err.name == 'ValidationError') {
 				req.flash('postErr', 'invalid input');
@@ -60,7 +62,8 @@ exports.show = function(req, res, next) {
 exports.delete = function(req, res, next) {
 	var topic_id = req.param('topic_id');
 	var condition = {
-		_id: req.param('post_id')
+		_id: req.param('post_id'),
+		username: req.session.username
 	};
 
 	PostModel.remove(condition, function(err, result) {

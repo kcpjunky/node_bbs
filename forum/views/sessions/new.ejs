@@ -1,37 +1,56 @@
-<div id="auth_form" class="clear">
-	<form id="login" action="/sessions" method="post" class="box_effect">
-		<h2>login</h2>
-		<%- message('loginErr') %>
-		<div class="inputs">
-			<p><label for="login_username">username</label></p>
-			<p><input id="login_username" type="text" name="username" size="30" placeholder="username"></p>
-			
-			<p><label for="login_password">password</label></p>
-			<p><input id="login_password" type="password" name="password" size="30" placeholder="password"></p>
-			
-			<p><label for="login_username">username</label></p>
-			<p><input id="login_rememberme" type="text" name="rememberme" size="30" placeholder="rememberme"></p>
+<div class="container">
+	<div id="auth_form" class="clear">
+		<form id="login" action="/sessions" method="post" class="box_effect">
+			<h2>login</h2>
+			<%- message('loginErr') %>
+			<div class="inputs">
+				<p><label for="login_username">username</label></p>
+				<div class="form-group">
+					<p><input id="login_username" type="text" name="username" size="30" placeholder="username"></p>
+				</div>
+				<p><label for="login_password">password</label></p>
+				<div class="form-group">
+					<p><input id="login_password" type="password" name="password" size="30" placeholder="password"></p>
+				</div>
+				<p><label for="login_username">username</label></p>
+				<div class="form-group">
+					<p><input id="login_rememberme" type="text" name="rememberme" size="30" placeholder="rememberme"></p>
+				</div>
+				<div class="col-xs-3">
+					<p><input type="submit" class="btn btn-block btn-lg btn-primary" value="login"></p>
+				</div>
+			</div>
+		</form>
+	</div>
+<br>
+	<div class="row">
+		<form id="register" action="/users" method="post" class="box_effect">
+			<h2> Create Account</h2>
+			<%- message('registerErr') %>
+			<div class="col-xs-3">
+	            <p><label for="register_username">username</label></p>
+				<div class="form-group">
+					<p><input id="register_username" type="text" name="username" size="30" placeholder="username"></p>
+				</div>
+			    <p><label for="register_password">password</label></p>
+			    <div class="form-group">
+					<p><input id="register_password" type="password" name="password" size="30" placeholder="password"></p>
+				</div>
 
-			<p><input type="submit" class="newpost" value="login"></p>
-		</div>
-	</form>
+	            <p><label for="register_password2">password(確認用)</label></p>
+				<div class="form-group">
+					<p><input id="register_password2" type="password" name="password2" size="30" placeholder="password(again)"></p>
+				</div>
+				<p><label for="register_username">username</label></p>
+			    <div class="form-group">
+					<p><input id="register_rememberme" type="text" name="rememberme" size="30" placeholder="rememberme"></p>
+			    </div>
 
-	<form id="register" action="/users" method="post" class="box_effect">
-		<h2> Create Account</h2>
-		<%- message('registerErr') %>
-		<div class="inputs">
-            <p><label for="register_username">username</label></p>
-			<p><input id="register_username" type="text" name="username" size="30" placeholder="username"></p>			            
-		
-		    <p><label for="register_password">password</label></p>
-		    <p><input id="register_password" type="password" name="password" size="30" placeholder="password"></p>
-			
-            <p><label for="register_password2">password(確認用)</label></p>
-			<p><input id="register_password2" type="password" name="password2" size="30" placeholder="password(again)"></p>
-			
-			<p><label for="register_username">username</label></p>
-		    <p><input id="register_rememberme" type="text" name="rememberme" size="30" placeholder="rememberme"></p>
-		    <p><input type="submit" class="newpost" value="login"></p>
-		</div>
-	</from>
+				<div class="col-xs-10">
+					<p><input type="submit" class="btn btn-block btn-lg btn-primary" value="create account"></p>
+				</div>
+			</div>
+		</from>
+	</div>
 </div>
+	</div>

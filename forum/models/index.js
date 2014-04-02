@@ -11,7 +11,7 @@ exports.topics = [
 	{ url: '/topics/4', name: 'Mocha' },
 	{ url: '/topics/5', name: 'Vows' }
 ];
-	
+
 //スキーマ
 var Schema = mongoose.Schema;
 
@@ -39,7 +39,9 @@ var UserSchema = new Schema({
 });
 
 UserSchema.methods.setPassword = function(password, password2) {
+	console.log("set password");
 	if (password === password2) {
+		console.log("password match");
 		this.password = password;
 		return true;
 	}

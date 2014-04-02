@@ -14,6 +14,7 @@ var models = require('../../models'),
 
 
 exports.index = function(req, res) {
+	console.log("routes index");
 	res.render('topics/index', {
 		title: 'Topics',
 		topics: topics
@@ -30,17 +31,17 @@ exports.index = function(req, res) {
 //	}];
 
 exports.show = function(req, res, next) {
-	console.log("show");	
+	console.log("show");
 
 
 	//topic_idを数字に変換する
 	var topic_id = parseInt(req.param('topic_id'), 10);
 
-	if (!topic_id){ 
+	if (!topic_id){
 		console.log("next");
 		return next();
 	}
-	
+
 	//指定したtopicIdの項目がない場合
 	if (!topics[topic_id -1]) {
 		return next(new NotFound(req.url));

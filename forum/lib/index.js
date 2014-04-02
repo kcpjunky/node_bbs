@@ -100,7 +100,7 @@ exports.loginRequired = function(req, res, next) {
 			//sessionもcookieもない場合、ログインページにリダイレクト
 			return res.redirect('/sessions/new');
 	}
-
+	console.log("check cookie");
 	//cookieがある場合
 	var token = JSON.parse(req.cookies.authtoken);
 	var condition = {
@@ -110,11 +110,14 @@ exports.loginRequired = function(req, res, next) {
 
 	//cookieを用いて認証する
 	User.findOne(condition, function(err, result) {
+		console.log("user findone");
 		if (err) {
+			console.log("next");
 			return next(err);
 		}
 
 		if (!result) {
+			console.log("no results");
 			return res.redirect('/sessions/new');
 		}
 
@@ -122,6 +125,7 @@ exports.loginRequired = function(req, res, next) {
 
 		User.update(condition, update, function(err, numAffected) {
 			if (err) {
+				console.log("next : User update");
 				return next(err);
 			}
 
@@ -131,7 +135,7 @@ exports.loginRequired = function(req, res, next) {
 				authcookie: update.authcookie
 
 			};
-
+			console.log("set cookie");
 			setCookie(res, JSON.stringify(newtoken));
 			next();
 		});
