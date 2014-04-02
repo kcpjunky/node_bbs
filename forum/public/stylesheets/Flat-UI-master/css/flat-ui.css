@@ -605,6 +605,7 @@ fieldset[disabled] .btn-default.active {
   border-color: #bdc3c7;
 }
 .btn-primary {
+    text-align: center;
   color: #ffffff;
   background-color: #1abc9c;
 }
@@ -624,7 +625,7 @@ fieldset[disabled] .btn-default.active {
   border-color: #16a085;
 }
 .btn-primary.disabled,
-.btn-primary[disabled],
+.[disabled],
 fieldset[disabled] .btn-primary,
 .btn-primary.disabled:hover,
 .btn-primary[disabled]:hover,
@@ -863,7 +864,7 @@ fieldset[disabled] .btn-link:focus {
   border-radius: 6px;
 }
 .btn-lg {
-  padding: 10px 19px;
+  padding: 10px 50px;
   font-size: 17px;
   line-height: 1.471;
   border-radius: 6px;

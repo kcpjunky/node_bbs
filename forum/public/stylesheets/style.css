@@ -6,3 +6,13 @@ body {
 a {
   color: #00B7FF;
 }
+
+#loginForm {
+    width: 30%;
+    float: left;
+}
+
+#createUserForm {
+    width: 60%;
+    float: right;
+}

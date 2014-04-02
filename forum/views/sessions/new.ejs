@@ -1,5 +1,5 @@
 <div class="container">
-	<div id="auth_form" class="clear">
+	<div id="loginForm" class="clear">
 		<form id="login" action="/sessions" method="post" class="box_effect">
 			<h2>login</h2>
 			<%- message('loginErr') %>
@@ -22,9 +22,8 @@
 			</div>
 		</form>
 	</div>
-<br>
 	<div class="row">
-		<form id="register" action="/users" method="post" class="box_effect">
+		<form id="createUserForm" action="/users" method="post" class="box_effect">
 			<h2> Create Account</h2>
 			<%- message('registerErr') %>
 			<div class="col-xs-3">
@@ -37,7 +36,7 @@
 					<p><input id="register_password" type="password" name="password" size="30" placeholder="password"></p>
 				</div>
 
-	            <p><label for="register_password2">password(確認用)</label></p>
+	            <p><label for="register_password2">password(確認)</label></p>
 				<div class="form-group">
 					<p><input id="register_password2" type="password" name="password2" size="30" placeholder="password(again)"></p>
 				</div>
@@ -46,8 +45,8 @@
 					<p><input id="register_rememberme" type="text" name="rememberme" size="30" placeholder="rememberme"></p>
 			    </div>
 
-				<div class="col-xs-10">
-					<p><input type="submit" class="btn btn-block btn-lg btn-primary" value="create account"></p>
+				<div class="col-xs-20">
+					<p><input type="submit" class="btn btn-block btn-hg btn-primary" value="create"></p>
 				</div>
 			</div>
 		</from>
