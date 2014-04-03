@@ -4,6 +4,9 @@ var models = require('../../models'),
 
 var logger = require('../../config/log.js');
 exports.new = function(req, res, next) {
+	if (req.sessions) {
+		res.render('topics');
+	}
 	res.render('sessions/new', {
 		title: 'Login'
 	});
@@ -17,7 +20,8 @@ exports.create = function(req, res) {
 	var rememberme = req.param('rememberme');
 	User.findOne(condition, function(err, result) {
 		if (err) {
-			logger.error('no user found');
+			console.log(err.name);
+			logger.error(err);
 			return next(err);
 		}
 		if (!result) {
@@ -28,6 +32,7 @@ exports.create = function(req, res) {
 
 		if (rememberme) {
 			//cookieを保存
+			logger.info('remember');
 			var newtoken = {
 				username: result.username,
 				authcookie: result.authcookie

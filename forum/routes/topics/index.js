@@ -3,7 +3,7 @@ var models = require('../../models'),
     PostModel = models.PostModel,
 	lib = require('../../lib'),
 	NotFound = lib.NotFound;
-
+var logger = require('../../config/log.js');
 //var topics = [
 //	{ url: '/topics/1', name: 'Connect' },
 //	{ url: '/topics/2', name: 'Express' },
@@ -16,9 +16,8 @@ var models = require('../../models'),
 exports.index = function(req, res) {
 	console.log("routes index");
 	console.log(topics);
-	if (!req.sessions) {
-		res.redirect('/sessions/new');
-	}
+	logger.info('/topics/index');
+
 	res.render('topics/index', {
 		title: 'Topics',
 		topics: topics
@@ -34,6 +33,9 @@ exports.index = function(req, res) {
 //	created_at: new Date()
 //	}];
 
+/**
+ * 各トピックスのコメント一覧
+ */
 exports.show = function(req, res, next) {
 	console.log("show");
 

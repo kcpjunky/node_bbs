@@ -1,3 +1,4 @@
+<div id="errorFrame">
 <h1> <%= title %> </h1>
 <ul class="message">
 	<% if (err.path) { %>
@@ -6,5 +7,8 @@
 		<li>Sorry.. something wrong with servr </li>
 	<% } %>
 </ul>
-
-<p> <a href="/topics">Top</a></p>
+<div id="errorImg">
+	<img src='/images/error.gif'>
+</div>
+<p> <a class="btn btn-block btn-g btn-danger"href="/sessions/new">ログイン画面へ</a></p>
+</div>

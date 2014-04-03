@@ -34,6 +34,8 @@ exports.create = function(req, res, next) {
 					req.flash('registerErr', 'two passwords doesn\'t match!');
 				} else {
 					// その他エラー
+					console.log(err);
+					logger.fatal(err);
 					logger.fatal('unknown error has occured at user.save()');
 					req.flash('registerErr', 'check your inputs again!');
 				}
@@ -56,7 +58,7 @@ exports.create = function(req, res, next) {
 	//	console.log(result);
 	console.log("create");
 	req.session.username = result.username;
-	res.redirect('top');
+	res.redirect('login');
 
 	});
 };

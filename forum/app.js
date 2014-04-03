@@ -69,7 +69,7 @@ app.dynamicHelpers(lib.dynamicHelpers);
 //app.get('/', lib.loginRequired, routes.index);
 app.get('/', routes.index);
 
-app.get('/topics/:topic_id?', routes.topics.show);
+app.get('/topics/:topic_id?',lib.loginRequired, routes.topics.show);
 //パラメータがないときはindexに飛ばしたいときnextを使う
 //app.get('/topics/:topic_id?', function(req, res, next) {
 //	var topic_id = req.param('topic_id');
@@ -94,7 +94,7 @@ app.del('/topics/:topic_id/posts/:post_id', routes.topics.posts.delete);
 app.post('/users', routes.users.create);
 
 //登録フォーム
-app.get('/sessions/new', routes.sessions.new);
+app.get('/sessions/new', lib.loginRequired, routes.sessions.new);
 
 app.get('/sessions/destroy', routes.sessions.delete);
 

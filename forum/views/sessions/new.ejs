@@ -2,7 +2,11 @@
 	<div id="loginForm" class="clear">
 		<form id="login" action="/sessions" method="post" class="box_effect">
 			<h2>login</h2>
-			<%- message('loginErr') %>
+			<h5>
+				<div id="errMsg">
+					<%- message('loginErr') %>
+				</div>
+			</h5>
 			<div class="inputs">
 				<p><label for="login_username">username</label></p>
 				<div class="form-group">
@@ -25,7 +29,11 @@
 	<div class="row">
 		<form id="createUserForm" action="/users" method="post" class="box_effect">
 			<h2> Create Account</h2>
-			<%- message('registerErr') %>
+			<h5>
+				<div id="errMsg">
+					<%- message('registerErr') %>
+				</div>
+			</h5>
 			<div class="col-xs-3">
 	            <p><label for="register_username">username</label></p>
 				<div class="form-group">
@@ -40,10 +48,10 @@
 				<div class="form-group">
 					<p><input id="register_password2" type="password" name="password2" size="30" placeholder="password(again)"></p>
 				</div>
-				<p><label for="register_username">username</label></p>
-			    <div class="form-group">
-					<p><input id="register_rememberme" type="text" name="rememberme" size="30" placeholder="rememberme"></p>
-			    </div>
+				<p><label for="register_username">自動ログイン</label></p>
+					<div class="form-group">
+						<p><input value="checked" data-toggle="checkbox" id="checkbox2" type="checkbox" name="rememberme" placeholder="rememberme">checked</p>
+			    	</div>
 
 				<div class="col-xs-20">
 					<p><input type="submit" class="btn btn-block btn-hg btn-primary" value="create"></p>

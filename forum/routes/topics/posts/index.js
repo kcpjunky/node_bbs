@@ -77,6 +77,7 @@ exports.delete = function(req, res, next) {
 	console.log(req.param('post_id'));
 	PostModel.remove(condition, function(err, result) {
 		if (err) {
+			logger.error(err);
 			logger.error('failed to remove post , post_id = ' + condition._id + ' username = ' + condition.username);
 			//pending
 			return next(err);

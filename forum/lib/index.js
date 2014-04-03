@@ -51,7 +51,7 @@ exports.dynamicHelpers = {
 			return '' + '<p class="login_user">Login as ' + req.session.username + '</p>'
 					+ '<p class="logout"><a href="/sessions/destroy">logout</a></p>';
 		}
-		return '<p class="login"><a href="/sessions/new">login</a></p>';
+		return '<a href="/sessions/new">login</a>';
 	},
 	message: function(req, res) {
 		return function(type) {
@@ -139,8 +139,7 @@ exports.loginRequired = function(req, res, next) {
 		if (!result) {
 			logger.warn('there is no record at User.findOne()');
 			console.log("no results");
-			return next();
-			//return res.redirect('/sessions/new');
+			return res.redirect('/sessions/new');
 		}
 
 		var update = { authcookie: models.getAuthCookie()};

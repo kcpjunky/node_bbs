@@ -16,3 +16,18 @@ a {
     width: 60%;
     float: right;
 }
+
+#errorFrame {
+    display: table-cell;
+    float: center;
+    vertical-align: #ccc;
+    text-align: center;
+}
+
+#errorImg {
+    top: 50%;
+}
+
+#errMsg {
+    color: #C0392B;
+}
