@@ -49,3 +49,8 @@ io.sockets.on('connection', function (socket) {
 app.get('/room', routes.room.index);
 app.listen(3000);
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
+
+module.exports = app;
+if (!module.parent) {
+    app.listen(3000,'172.0.0.1');
+}
