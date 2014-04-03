@@ -1,0 +1,30 @@
+{
+    "appenders": [
+        {
+            "category": "app",
+            "type": "dateFile",
+            "filename": "/var/log/express/app.log",
+            "pattern": "-yyyy-MM-dd",
+            "maxLogfSize": 20480,
+            "backups": 10
+        },
+
+        {
+            "category": "access",
+            "type": "dateFile",
+            "filename": "/var/log/express/access.log",
+            "pattern": "-yyyy-MM-dd",
+            "maxLogfSize": 20480,
+            "backups": 10
+        },
+
+        {
+            "category": "error",
+            "type": "dateFile",
+            "filename": "/var/log/express/error.log",
+            "pattern": "-yyyy-MM-dd",
+            "maxLogfSize": 20480,
+            "backups": 10
+        }
+    ]
+}

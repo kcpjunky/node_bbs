@@ -6,7 +6,10 @@
 var express = require('express')
   , routes = require('./routes')
   , lib = require('./lib');
-
+var logger = require('./config/log.js');
+//logger.debug("test");
+console.log(logger);
+console.error("errrr");
 var app = module.exports = express.createServer();
 
 var models = require('./models');
@@ -35,7 +38,7 @@ app.configure(function(){
 
 //開発環境
 app.configure('development', function(){
-
+app.use(logger.accessConfig);
   models.init('localhost', 'forum_dev');
 //  app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
 });
@@ -43,10 +46,12 @@ app.configure('development', function(){
 //本番環境
 app.configure('production', function(){
  models.init('localhost', forum_prod);
+app.use(logger.accessConfig);
 // app.use(express.errorHandler());
 });
 
 app.configure('test', function() {
+    app.use(logger.accessConfig);
 	models.init('localhost', 'forum_test');
 //	app.use(express.errorHandler());
 });

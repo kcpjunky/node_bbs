@@ -8,13 +8,19 @@ var setCookie = exports.setCookie = function(res, val) {
 		expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7)
 	});
 };
+
+var logger = require('../config/log.js');
 //error
 //404 error
 function NotFound(path) {
+	var errStr = 'NotFound' + path;
 	Error.call(this, 'Not Found');
 	Error.captureStackTrace(this, this.constructor); // スタックトレースの格納
 	this.name = 'NotFound';
 	this.path = path;
+
+	logger.error(errStr);
+
 }
 
 //NotFoundをErrorに継承させる
@@ -67,9 +73,11 @@ exports.dynamicHelpers = {
 
 // Error handler
 exports.errorHandler = function(err, req, res) {
+	var title = '500 internal server error';
+	logger.fatal(title);
 	res.render('err', {
 		status: 500,
-		title: '500 internal server error',
+		title: title,
 		err: err
 	});
 };
