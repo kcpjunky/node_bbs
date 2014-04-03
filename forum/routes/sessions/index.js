@@ -52,6 +52,7 @@ exports.delete = function(req, res) {
 	req.session.destroy();
 
 	res.clearCookie('authtoken', {path: '/'});
-	logger.info('post')
-	res.redirect('./sessions/new');
+	logger.info('session deleted');
+
+	res.redirect('login');
 };

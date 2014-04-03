@@ -94,7 +94,7 @@ app.del('/topics/:topic_id/posts/:post_id', routes.topics.posts.delete);
 app.post('/users', routes.users.create);
 
 //登録フォーム
-app.get('/sessions/new', lib.loginRequired, routes.sessions.new);
+app.get('/sessions/new', routes.sessions.new);
 
 app.get('/sessions/destroy', routes.sessions.delete);
 
