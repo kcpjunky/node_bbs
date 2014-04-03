@@ -105,13 +105,15 @@ exports.notFoundHandler = function(err, req, res, next) {
 exports.loginRequired = function(req, res, next) {
 	console.log("loginRequired");
 	if (req.session.username) {
-			return next();
+		return next();
 	}
 
 //	res.redirect('/sessions/new');
 	if (!req.cookies.authtoken) {
-			//sessionもcookieもない場合、ログインページにリダイレクト
-			return res.redirect('/sessions/new');
+
+		//sessionもcookieもない場合、ログインページにリダイレクト
+		logger.warn('there are no session and cookie : redirect to /sessions/new');
+		return res.redirect('/sessions/new');
 	}
 	console.log("check cookie");
 	//cookieがある場合
@@ -125,7 +127,7 @@ exports.loginRequired = function(req, res, next) {
 	User.findOne(condition, function(err, result) {
 		console.log("user findone");
 		if (err) {
-			console.log("next");
+			logger.error('error has occured at user.findOne');
 			return next(err);
 		}
 
