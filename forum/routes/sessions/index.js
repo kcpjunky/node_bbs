@@ -30,7 +30,7 @@ exports.create = function(req, res) {
 				username: result.username,
 				authcookie: result.authcookie
 			};
-			lib.setCookie(res, JSON.stringfy(newtoken));
+			lib.setCookie(res, JSON.stringify(newtoken));
 		}
 
 		//console.log(result);

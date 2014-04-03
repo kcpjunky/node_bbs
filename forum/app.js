@@ -35,15 +35,15 @@ app.configure(function(){
 
 //開発環境
 app.configure('development', function(){
-  
+
   models.init('localhost', 'forum_dev');
-//  app.use(express.errorHandler({ dumpExceptions: true, showStack: true })); 
+//  app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
 });
 
 //本番環境
 app.configure('production', function(){
  models.init('localhost', forum_prod);
-// app.use(express.errorHandler()); 
+// app.use(express.errorHandler());
 });
 
 app.configure('test', function() {
@@ -107,3 +107,10 @@ app.listen(3000);
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
 
 
+//テスト用
+module.exports = app;
+
+//supertestによる単体テスト時に実行
+if (!module.parent) {
+    app.listen(3000, '0.0.0.0');
+}

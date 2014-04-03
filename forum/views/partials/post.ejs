@@ -10,6 +10,9 @@
 
 	<form class="delete" action="/topics/<%= topic_id %>/posts/<%= post._id %>" method="POST">
 		<input type="hidden" name="_method" value="DELETE">
-		<input type="submit" name="deletepost" class="deletepost" value="delete">
+		<div class="col-xs-1">
+			<input type="submit" name="deletepost" class="btn btn-block btn-g btn-danger" value="delete">
+		</div>
 	</form>
+	<br />
 </section>
