@@ -2,7 +2,7 @@ var models = require('../../models'),
 	lib = require('../../lib'),
 	User = models.UserModel;
 
-
+var logger = require('../../config/log.js');
 exports.new = function(req, res, next) {
 	res.render('sessions/new', {
 		title: 'Login'
@@ -17,10 +17,11 @@ exports.create = function(req, res) {
 	var rememberme = req.param('rememberme');
 	User.findOne(condition, function(err, result) {
 		if (err) {
+			logger.error('no user found');
 			return next(err);
 		}
 		if (!result) {
-
+			logger.error('authentication failed');
 			req.flash('loginErr', 'authentication failed');
 			return res.redirect('back');
 		}

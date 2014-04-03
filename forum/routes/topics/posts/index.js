@@ -2,6 +2,8 @@ var models = require('../../../models'),
 	topics = models.topics,
     PostModel = models.PostModel;
 
+var logger = require('../../../config/log.js');
+
 exports.create = function(req, res, next) {
 	console.log("topics/posts//create");
 	var topic_id = req.param('topic_id');
@@ -24,6 +26,7 @@ exports.create = function(req, res, next) {
 
 		if (err) {
 			if (err.name == 'ValidationError') {
+				logger.error('validation error occured');
 				req.flash('postErr', 'invalid input');
 
 				return res.redirect('back');
@@ -39,11 +42,12 @@ exports.show = function(req, res, next) {
 	PostModel.findById(post_id, function(err, result) {
 		if (err) {
 			//error page
+			logger.error('no post found post_id = ' + post_id);
 			return next(err);
 		}
 
 		if (!result) {
-
+			logger.error('failed to get model post_id = ' + post_id);
 			//結果が取得できなかったとき
 			req.flash('getPostErr', 'Can\'t get this post');
 			return res.redirect('back');
@@ -68,11 +72,13 @@ exports.delete = function(req, res, next) {
 
 	PostModel.remove(condition, function(err, result) {
 		if (err) {
+			logger.error('failed to remove post , post_id = ' + condition._id + ' username = ' + condition.username);
 			//pending
 			return next(err);
 		}
 
 		if (result === 0 ) {
+			logger.error('no such post post_id = ' + condition._id);
 			req.flash('deleteErr', 'Can\'t delete this topic');
 			return res.redirect('back');
 		}
