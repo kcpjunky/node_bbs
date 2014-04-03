@@ -6,8 +6,9 @@
 exports.index = function(req, res, next){
 //  res.render('index', { title: 'Express' }
     console.log('routes.index');
-    
-    res.redirect('back');
+
+    res.redirect('login');
+    //res.redirect('top');
 };
 
 exports.topics = require('./topics');

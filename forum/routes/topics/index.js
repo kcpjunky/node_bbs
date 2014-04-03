@@ -16,6 +16,9 @@ var models = require('../../models'),
 exports.index = function(req, res) {
 	console.log("routes index");
 	console.log(topics);
+	if (!req.sessions) {
+		res.redirect('/sessions/new');
+	}
 	res.render('topics/index', {
 		title: 'Topics',
 		topics: topics

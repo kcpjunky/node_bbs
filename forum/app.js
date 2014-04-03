@@ -33,6 +33,7 @@ app.configure(function(){
 
   app.use(app.router);
   app.use(express.static(__dirname + '/public'));
+  app.redirect('login', '/sessions/new');
   app.redirect('top', '/topics');
 });
 

@@ -2,7 +2,7 @@ var util = require('util'),
 		models = require('../models'),
 		user = models.UserModel;
 
-	var setCookie = exports.setCookie = function(res, val) {
+var setCookie = exports.setCookie = function(res, val) {
 	res.cookie('authtoken', val, {
 		path: '/',
 		expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7)
@@ -95,6 +95,10 @@ exports.notFoundHandler = function(err, req, res, next) {
 			err: err
 		});
 	} else {
+		if (err.name === 'ReferenceError') {
+
+		}
+		console.log(err);
 		logger.error("something is wrong");
 		return next(err);
 	}
@@ -117,18 +121,15 @@ exports.loginRequired = function(req, res, next) {
 	}
 	console.log("check cookie");
 	//cookieがある場合
-	console.log(req.cookies.authtoken);
 	var token = JSON.parse(req.cookies.authtoken);
-	console.log('token = ' +token);
-	console.log('username = ' + token.username);
-	console.log('authcookie = ' + token.authcookie);
+
 	var condition = {
 		username: token.username,
 		authcookie: token.authcookie
 	}
 
 	//cookieを用いて認証する
-	User.findOne(condition, function(err, result) {
+	user.findOne(condition, function(err, result) {
 		console.log("user findone");
 		if (err) {
 			logger.error('error has occured at user.findOne');
@@ -138,12 +139,13 @@ exports.loginRequired = function(req, res, next) {
 		if (!result) {
 			logger.warn('there is no record at User.findOne()');
 			console.log("no results");
-			return res.redirect('/sessions/new');
+			return next();
+			//return res.redirect('/sessions/new');
 		}
 
 		var update = { authcookie: models.getAuthCookie()};
 
-		User.update(condition, update, function(err, numAffected) {
+		user.update(condition, update, function(err, numAffected) {
 			if (err) {
 				logger.warn(' update user data failed at User.update()')
 				console.log("next : User update");
