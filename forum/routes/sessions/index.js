@@ -20,6 +20,7 @@ exports.create = function(req, res) {
 			return next(err);
 		}
 		if (!result) {
+
 			req.flash('loginErr', 'authentication failed');
 			return res.redirect('back');
 		}

@@ -9,7 +9,9 @@ var setCookie = exports.setCookie = function(res, val) {
 	});
 };
 
+// ログ用モジュール
 var logger = require('../config/log.js');
+
 //error
 //404 error
 function NotFound(path) {
@@ -85,12 +87,15 @@ exports.errorHandler = function(err, req, res) {
 // NotFoundのエラーハンドラ
 exports.notFoundHandler = function(err, req, res, next) {
 	if (err instanceof NotFound) {
+		var title = '404 page not found';
+		logger.error(title);
 		res.render('err', {
 			status: 404,
-			title: '404 page not found',
+			title: title,
 			err: err
 		});
 	} else {
+		logger.error("something is wrong");
 		return next(err);
 	}
 };
@@ -125,6 +130,7 @@ exports.loginRequired = function(req, res, next) {
 		}
 
 		if (!result) {
+			logger.warn('there is no record at User.findOne()');
 			console.log("no results");
 			return res.redirect('/sessions/new');
 		}
@@ -133,6 +139,7 @@ exports.loginRequired = function(req, res, next) {
 
 		User.update(condition, update, function(err, numAffected) {
 			if (err) {
+				logger.warn(' update user data failed at User.update()')
 				console.log("next : User update");
 				return next(err);
 			}
