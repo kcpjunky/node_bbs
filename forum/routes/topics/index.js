@@ -15,6 +15,7 @@ var models = require('../../models'),
 
 exports.index = function(req, res) {
 	console.log("routes index");
+	console.log(topics);
 	res.render('topics/index', {
 		title: 'Topics',
 		topics: topics

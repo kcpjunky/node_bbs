@@ -38,7 +38,7 @@ exports.create = function(req, res) {
 		//console.log(result);
 
 		req.session.username = result.username;
-
+		logger.info('post create success');
 		res.redirect('top');
 	});
 };
@@ -47,5 +47,6 @@ exports.delete = function(req, res) {
 	req.session.destroy();
 
 	res.clearCookie('authtoken', {path: '/'});
+	logger.info('post')
 	res.redirect('./sessions/new');
 };

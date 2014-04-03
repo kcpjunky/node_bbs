@@ -5,15 +5,12 @@ var models = require('../../../models'),
 var logger = require('../../../config/log.js');
 
 exports.create = function(req, res, next) {
-	console.log("topics/posts//create");
+	console.log("topics/posts/create");
 	var topic_id = req.param('topic_id');
 	var title = req.param('title');
 	var detail = req.param('detail');
 
-//	res.send('topic_id: ' + topic_id
-//    console.log('topic_id: ' + topic_id
-//                + ' title ' + title
-//				+ ' detail' + detail);
+	// modelに値を割り当てる
 	var post = new PostModel({
 		topic_id: topic_id,
 		title: title,
@@ -25,13 +22,19 @@ exports.create = function(req, res, next) {
 	//console.log(result);
 
 		if (err) {
+
 			if (err.name == 'ValidationError') {
 				logger.error('validation error occured');
 				req.flash('postErr', 'invalid input');
 
 				return res.redirect('back');
+			} else {
+				logger.error('unknown error occured');
 			}
 			return next(err);
+		} else {
+			logger.info('post save success');
+			res.redirect('/topics/' + topic_id);
 		}
 	});
 };
@@ -65,11 +68,13 @@ exports.show = function(req, res, next) {
 
 exports.delete = function(req, res, next) {
 	var topic_id = req.param('topic_id');
+	var post_id = req.param('post_id');
 	var condition = {
-		_id: req.param('post_id'),
+		_id: ObjectId(post_id),
 		username: req.session.username
 	};
 
+	console.log(req.param('post_id'));
 	PostModel.remove(condition, function(err, result) {
 		if (err) {
 			logger.error('failed to remove post , post_id = ' + condition._id + ' username = ' + condition.username);

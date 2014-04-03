@@ -109,6 +109,11 @@ app.error(lib.notFoundHandler);
 app.error(lib.errorHandler);
 
 app.listen(3000);
+
+app.on('error', function(err){
+    console.log(err);
+});
+
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
 
 
@@ -117,5 +122,5 @@ module.exports = app;
 
 //supertestによる単体テスト時に実行
 if (!module.parent) {
-    app.listen(3000, '0.0.0.0');
+    app.listen(3000, '127.0.0.1');
 }

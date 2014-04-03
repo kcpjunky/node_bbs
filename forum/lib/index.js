@@ -117,7 +117,11 @@ exports.loginRequired = function(req, res, next) {
 	}
 	console.log("check cookie");
 	//cookieがある場合
+	console.log(req.cookies.authtoken);
 	var token = JSON.parse(req.cookies.authtoken);
+	console.log('token = ' +token);
+	console.log('username = ' + token.username);
+	console.log('authcookie = ' + token.authcookie);
 	var condition = {
 		username: token.username,
 		authcookie: token.authcookie
