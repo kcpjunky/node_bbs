@@ -3,6 +3,8 @@ var models = require('../../models'),
     PostModel = models.PostModel,
 	lib = require('../../lib'),
 	NotFound = lib.NotFound;
+
+// ログ用モジュール
 var logger = require('../../config/log.js');
 //var topics = [
 //	{ url: '/topics/1', name: 'Connect' },
@@ -12,7 +14,9 @@ var logger = require('../../config/log.js');
 //	{ url: '/topics/5', name: 'Vows' }
 //];
 
-
+/**
+ * topic一覧画面
+ */
 exports.index = function(req, res) {
 	console.log("routes index");
 	console.log(topics);
@@ -23,15 +27,6 @@ exports.index = function(req, res) {
 		topics: topics
 	});
 };
-
-
-////ダミーポスト
-//var dummy_post = [{
-//	title: 'dummy post',
-//	detail: 'hello express',
-//	username: 'jxck',
-//	created_at: new Date()
-//	}];
 
 /**
  * 各トピックスのコメント一覧
@@ -52,15 +47,11 @@ exports.show = function(req, res, next) {
 	if (!topics[topic_id -1]) {
 		return next(new NotFound(req.url));
 	}
-//	res.render('topics/show', {
-//		title: topics[topic_id - 1].name,
-//		topic_id: topic_id,
-//		posts: dummy_post
-//	});
 
 	PostModel.where('topic_id', topic_id).run(function(err, result) {
 		if (err) {
 			//エラーをnext()二投げるとエラーページに遷移
+			logger.error(err);
 			return next(err);
 		}
 

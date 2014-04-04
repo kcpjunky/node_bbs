@@ -2,7 +2,13 @@ var models = require('../../models'),
 	lib = require('../../lib'),
 	User = models.UserModel;
 
+// ログ用モジュール
 var logger = require('../../config/log.js');
+
+/**
+ * セッションがあったらtopicsページ
+ * なかったらログインページに遷移
+ */
 exports.new = function(req, res, next) {
 	if (req.sessions) {
 		res.render('topics');
@@ -12,6 +18,9 @@ exports.new = function(req, res, next) {
 	});
 };
 
+/**
+ * セッション情報作成
+ */
 exports.create = function(req, res) {
 	var condition = {
 		username: req.param('username'),
@@ -48,9 +57,14 @@ exports.create = function(req, res) {
 	});
 };
 
+/**
+ * セッション情報の削除
+ */
 exports.delete = function(req, res) {
+	// セッション削除
 	req.session.destroy();
 
+    // クッキー情報削除
 	res.clearCookie('authtoken', {path: '/'});
 	logger.info('session deleted');
 

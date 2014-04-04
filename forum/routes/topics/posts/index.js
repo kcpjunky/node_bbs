@@ -2,8 +2,12 @@ var models = require('../../../models'),
 	topics = models.topics,
     PostModel = models.PostModel;
 
+// ログ用モジュール
 var logger = require('../../../config/log.js');
 
+/**
+ * 投稿を保存する
+ */
 exports.create = function(req, res, next) {
 	console.log("topics/posts/create");
 	var topic_id = req.param('topic_id');
@@ -19,7 +23,6 @@ exports.create = function(req, res, next) {
 	});
 
 	post.save(function(err, result) {
-	//console.log(result);
 
 		if (err) {
 
@@ -30,6 +33,7 @@ exports.create = function(req, res, next) {
 				return res.redirect('back');
 			} else {
 				logger.error('unknown error occured');
+				logger.error(err);
 			}
 			return next(err);
 		} else {
@@ -39,16 +43,23 @@ exports.create = function(req, res, next) {
 	});
 };
 
+/**
+ *
+ */
 exports.show = function(req, res, next) {
 	var topic_id = req.param('topic_id');
 	var post_id = req.param('post_id');
+
+	//　選択した投稿情報を取得する
 	PostModel.findById(post_id, function(err, result) {
 		if (err) {
 			//error page
 			logger.error('no post found post_id = ' + post_id);
+			logger.error(err);
 			return next(err);
 		}
 
+		// 結果なしの場合
 		if (!result) {
 			logger.error('failed to get model post_id = ' + post_id);
 			//結果が取得できなかったとき
@@ -66,6 +77,9 @@ exports.show = function(req, res, next) {
 	});
 };
 
+/**
+ * 選択した投稿を削除する
+ */
 exports.delete = function(req, res, next) {
 	var topic_id = req.param('topic_id');
 	var post_id = req.param('post_id');
@@ -75,6 +89,8 @@ exports.delete = function(req, res, next) {
 	};
 
 	console.log(req.param('post_id'));
+
+	// 該当する投稿を削除する
 	PostModel.remove(condition, function(err, result) {
 		if (err) {
 			logger.error(err);
@@ -83,6 +99,7 @@ exports.delete = function(req, res, next) {
 			return next(err);
 		}
 
+		// 結果が0件だった場合
 		if (result === 0 ) {
 			logger.error('no such post post_id = ' + condition._id);
 			req.flash('deleteErr', 'Can\'t delete this topic');
