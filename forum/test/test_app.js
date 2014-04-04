@@ -18,6 +18,18 @@ describe('/', function() {
                 }
             });
     });
+
+    it('/sessions/newに遷移　title: Loginというぱらめーたを渡す', function() {
+        request(app)
+            .get('/')
+            .expect(200)
+            .expect(title, 'Login')
+            .end(function(err, res) {
+                if (err) {
+                    throw err;
+                }
+            });
+    });
 });
 
 /**
@@ -53,6 +65,4 @@ describe('/sessions/destroy', function() {
                 }
             });
     });
-
-    it('')
 });
