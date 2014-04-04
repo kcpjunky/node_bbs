@@ -30,7 +30,7 @@ exports.create = function(req, res, next) {
 
 				if (err.errors.password_mismatch) {
 					//パスワードミスマッチ
-					logger.error(err.name + ': two passwords doesn\'t match!')
+					logger.error(err.name + ': two passwords doesn\'t match!');
 					req.flash('registerErr', 'two passwords doesn\'t match!');
 				} else {
 					// その他エラー
@@ -43,7 +43,7 @@ exports.create = function(req, res, next) {
 				return res.redirect('back');
 			}
 
-		return next(err);
+			return next(err);
 		}
 
 		if (rememberme) {
@@ -51,14 +51,13 @@ exports.create = function(req, res, next) {
 			var newtoken = {
 				username: result.username,
 				authcookie: result.authcookie
-
 			};
+
 			lib.setCookie(res, JSON.stringify(newtoken));
 		}
-	//	console.log(result);
-	console.log("create");
-	req.session.username = result.username;
-	res.redirect('login');
 
+		console.log('create');
+		req.session.username = result.username;
+		res.redirect('login');
 	});
 };

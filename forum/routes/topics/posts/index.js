@@ -37,7 +37,12 @@ exports.create = function(req, res, next) {
 			}
 			return next(err);
 		} else {
-			logger.info('post save success');
+			if (!result) {
+				logger.error('failed to save post');
+			} else {
+				logger.info('post save success');
+			}
+			
 			res.redirect('/topics/' + topic_id);
 		}
 	});

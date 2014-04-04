@@ -1,18 +1,18 @@
+var logger = require('../config/log.js');
 
 /*
- * GET home page.
+ * GET: topページ
  */
-
 exports.index = function(req, res, next){
-//  res.render('index', { title: 'Express' }
+    if (err) {
+        logger.error(err);
+        return next(err);
+    }
     console.log('routes.index');
 
     res.redirect('login');
-    //res.redirect('top');
 };
 
 exports.topics = require('./topics');
-
 exports.sessions = require('./sessions');
-
 exports.users = require('./users');
