@@ -32,6 +32,8 @@ app.configure(function(){
 
     app.use(app.router);
     app.use(express.static(__dirname + '/public'));
+    app.use(lib.loginRequired);
+    
     app.redirect('login', '/sessions/new');
     app.redirect('top', '/topics');
 });
@@ -90,7 +92,7 @@ app.get('/sessions/new', routes.sessions.new);
 //セッション破棄
 app.get('/sessions/destroy', routes.sessions.delete);
 
-//login
+//loginする
 app.post('/sessions', routes.sessions.create);
 
 //error handler
@@ -101,7 +103,7 @@ app.error(lib.errorHandler);
 app.listen(3000);
 
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
-
+logger.fatal('tet');
 
 //テスト用
 module.exports = app;

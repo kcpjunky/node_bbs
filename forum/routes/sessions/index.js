@@ -13,7 +13,7 @@ exports.new = function(req, res, next) {
 
 	if (req.session.username) {
 		logger.info('session login');
-		res.render('topics');
+		res.redirect('top');
 	}
 	res.render('sessions/new', {
 		title: 'Login'
@@ -28,14 +28,18 @@ exports.create = function(req, res) {
 		username: req.param('username'),
 		password: req.param('password')
 	};
+	console.log('31');
 	var rememberme = req.param('rememberme');
 	User.findOne(condition, function(err, result) {
 		if (err) {
+			console.log('35');
 			console.log(err.name);
 			logger.error(err);
 			return next(err);
 		}
+		console.log('40');
 		if (!result) {
+			console.log('42');
 			logger.error('authentication failed');
 			req.flash('loginErr', 'authentication failed');
 			return res.redirect('back');
@@ -43,6 +47,7 @@ exports.create = function(req, res) {
 
 		if (rememberme) {
 			//cookieを保存
+			console.log('50');
 			logger.info('remember');
 			var newtoken = {
 				username: result.username,
@@ -55,7 +60,7 @@ exports.create = function(req, res) {
 
 		req.session.username = result.username;
 		logger.info('post create success');
-		res.redirect('topics');
+		res.redirect('top');
 	});
 };
 

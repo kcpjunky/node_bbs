@@ -42,7 +42,7 @@ exports.create = function(req, res, next) {
 			} else {
 				logger.info('post save success');
 			}
-			
+
 			res.redirect('/topics/' + topic_id);
 		}
 	});
@@ -89,8 +89,7 @@ exports.delete = function(req, res, next) {
 	var topic_id = req.param('topic_id');
 	var post_id = req.param('post_id');
 	var condition = {
-		_id: ObjectId(post_id),
-		username: req.session.username
+		_id: req.param('post_id')
 	};
 
 	console.log(req.param('post_id'));
@@ -101,6 +100,7 @@ exports.delete = function(req, res, next) {
 			logger.error(err);
 			logger.error('failed to remove post , post_id = ' + condition._id + ' username = ' + condition.username);
 			//pending
+
 			return next(err);
 		}
 

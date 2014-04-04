@@ -19,7 +19,6 @@ var logger = require('../../config/log.js');
  */
 exports.index = function(req, res) {
 	console.log("routes index");
-	console.log(topics);
 	logger.info('/topics/index');
 
 	res.render('topics/index', {
