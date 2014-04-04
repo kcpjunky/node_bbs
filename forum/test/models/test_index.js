@@ -27,5 +27,29 @@ describe('models/index.js', function() {
             expect(user.setPassword(p1, p2)).to.be(false);
 
         });
+
+        it('p1===p2だったら、呼び出した後にuser.passwordにパスワードがセットされる', function() {
+            var User = models.UserModel;
+
+            var user = new User();
+            var p1 = 'testtesttest';
+            var p2 = 'testtesttest';
+
+            user.setPassword(p1, p2);
+            expect(user.password).to.be(p1);
+
+        });
+
+        it('p1!==p2だったら、呼び出した後にuser.passwordはundefined', function() {
+            var User = models.UserModel;
+
+            var user = new User();
+            var p1 = 'testtesttest';
+            var p2 = 'testtesttes';
+
+            user.setPassword(p1, p2);
+            expect(user.password).to.be(undefined);
+
+        });
     });
 });
