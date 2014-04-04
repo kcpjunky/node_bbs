@@ -67,16 +67,14 @@ exports.dynamicHelpers = {
 			buf += '</ul>';
 			return buf;
 		};
-
 	}
 };
-
-
 
 // Error handler
 exports.errorHandler = function(err, req, res) {
 	var title = '500 internal server error';
 	logger.fatal(title);
+	logger.error(err);
 	res.render('err', {
 		status: 500,
 		title: title,
@@ -86,21 +84,24 @@ exports.errorHandler = function(err, req, res) {
 
 // NotFoundのエラーハンドラ
 exports.notFoundHandler = function(err, req, res, next) {
-	if (err instanceof NotFound) {
-		var title = '404 page not found';
-		logger.error(title);
-		res.render('err', {
-			status: 404,
-			title: title,
-			err: err
-		});
-	} else {
-		if (err.name === 'ReferenceError') {
-
+	if (err) {
+		if (err instanceof NotFound) {
+			var title = '404 page not found';
+			logger.error(title);
+			res.render('err', {
+				status: 404,
+				title: title,
+				err: err
+			});
 		}
-		console.log(err);
-		logger.error("something is wrong");
+		logger.error(err);
 		return next(err);
+	} else {
+
+			console.log(err);
+			logger.error(err);
+			logger.error("something is wrong");
+			return next(err);
 	}
 };
 

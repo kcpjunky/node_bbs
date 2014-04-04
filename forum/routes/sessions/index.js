@@ -10,10 +10,9 @@ var logger = require('../../config/log.js');
  * なかったらログインページに遷移
  */
 exports.new = function(req, res, next) {
-	if (err) {
-		return next(err);
-	}
-	if (req.sessions) {
+
+	if (req.session.username) {
+		logger.info('session login');
 		res.render('topics');
 	}
 	res.render('sessions/new', {

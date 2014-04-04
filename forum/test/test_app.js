@@ -3,7 +3,7 @@ var app = require('../app');
 var expect = require('expect.js');
 
 /**
- * '/'にアクセスすると'/top'にリダイレクトされる
+ * '/'にアクセスすると'/sessions/new'に遷移する
  *
  */
 describe('/', function() {
@@ -11,7 +11,7 @@ describe('/', function() {
         var expected_body = 'Hello World';
         request(app)
             .get('/')
-            .expect(302)
+            .expect(200)
             .end(function(err, res) {
                 if (err) {
                     throw err;
@@ -38,7 +38,8 @@ describe('/sessions/new', function() {
 });
 
 /**
- * /sessions/destroy　にアクセスしたら302
+ * /sessions/destroy　にアクセスしたらloginページに遷移する
+ * status302
  */
 describe('/sessions/destroy', function() {
     it('return 302', function() {
@@ -46,9 +47,12 @@ describe('/sessions/destroy', function() {
             .get('/sessions/destroy')
             .expect(302)
             .end(function(err, res) {
+                console.log(res.status);
                 if (err) {
                     throw err;
                 }
             });
     });
+
+    it('')
 });

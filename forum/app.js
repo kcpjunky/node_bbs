@@ -68,14 +68,6 @@ app.dynamicHelpers(lib.dynamicHelpers);
 app.get('/', routes.index);
 
 app.get('/topics/:topic_id?',lib.loginRequired, routes.topics.show);
-//パラメータがないときはindexに飛ばしたいときnextを使う
-//app.get('/topics/:topic_id?', function(req, res, next) {
-//	var topic_id = req.param('topic_id');
-//	if (!topic_id) {
-//		return next();
-//	}
-//	routes.topics.show;
-//});
 
 //個別ページ
 app.get('/topics/:topic_id/posts/:post_id', lib.loginRequired, routes.topics.posts.show);
@@ -83,13 +75,13 @@ app.get('/topics/:topic_id/posts/:post_id', lib.loginRequired, routes.topics.pos
 // 投稿
 app.post('/topics/:topic_id/posts', routes.topics.posts.create);
 
-
+// topic一覧
 app.get('/topics', lib.loginRequired, routes.topics.index);
 
-//app.get('/topics/:topic_id?', routes.topics.index);
-
+// 投稿削除
 app.del('/topics/:topic_id/posts/:post_id', routes.topics.posts.delete);
 
+// ユーザ作成
 app.post('/users', routes.users.create);
 
 //登録・ログインフォーム

@@ -4,13 +4,11 @@ var logger = require('../config/log.js');
  * GET: topページ
  */
 exports.index = function(req, res, next){
-    if (err) {
-        logger.error(err);
-        return next(err);
-    }
-    console.log('routes.index');
 
-    res.redirect('login');
+    console.log('routes.index');
+    res.render('sessions/new', {
+        title: 'Login'
+    });
 };
 
 exports.topics = require('./topics');
