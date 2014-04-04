@@ -58,6 +58,6 @@ exports.create = function(req, res, next) {
 
 		console.log('create');
 		req.session.username = result.username;
-		res.redirect('login');
+		res.redirect('/');
 	});
 };

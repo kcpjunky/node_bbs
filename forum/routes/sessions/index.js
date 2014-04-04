@@ -55,7 +55,7 @@ exports.create = function(req, res) {
 
 		req.session.username = result.username;
 		logger.info('post create success');
-		res.redirect('top');
+		res.redirect('topics');
 	});
 };
 

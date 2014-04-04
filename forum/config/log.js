@@ -27,7 +27,7 @@ exports.info = function(str) {
 
 // エラー　warn
 exports.warn = function(str) {
-	loggerErr.error(str);
+	loggerErr.warn(str);
 };
 
 // エラー error
@@ -37,5 +37,5 @@ exports.error = function(str) {
 
 // エラー fatal
 exports.fatal = function(str) {
-	loggerErr.error(str);
+	loggerErr.fatal(str);
 };
