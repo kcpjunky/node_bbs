@@ -1,57 +1,39 @@
-var request = require('supertest');
+var mongoose = require('mongoose');
+var models = require('../../models'),
+    lib = require('../../lib'),
+    User = models.UserModel;
+
+var supertest = require('supertest');
 //var app = require('../../app');
 var service = require('../../routes/users/index.js');
 
 var expect = require('expect.js');
-var models = require('../../models');
-var User = models.UserModel;
-var mongoose = require('mongoose');
 
-process.env.NODE_ENV = 'test';
-describe('db connection', function() {
-    beforeEach(function(done) {
-        function clearDB() {
-            for (var i in mongoose.connection.collections) {
-                mongoose.connection.collections[i].remove(function() {});
-            }
-            return done();
-        }
+describe('dbModel', function() {
 
-        if (mongoose.connection.readyState === 0 ) {
-            mongoose.connect(config.db.forum_test, function(err) {
-                if (err) {
-                    throw err;
-                }
-                return clearDB();
+    describe('UserModel', function() {
+        beforeEach(function(done) {
+            models.init('localhost', 'forum_test');
+            User.remove(function(err, User) {
+                if (err) return handleError(err);
+
+                done();
             });
-        } else {
-            return clearDB();
-        }
-
-    });
-    it ('test用のdbに接続', function(err) {
-        var connection = mongoose.connect('mongodb://localhost:27017/forum_test',function(err) {
-
-        });
-        console.log(connection);
-
-        connection.on('open', function(err) {
-            console.log('connect');
-        });
-    })
-    mongoose.connect('mongodb://localhost:27017/forum_test',function(err){});
-});
-
-describe('User',function() {
-
-    describe('find', function() {
-        //各テストがはじまる前の処理
-        before(function(done) {
-
         })
-        var username = 'testuser',
-            password = 'password',
-            password2 = 'password';
+        it ('データベースに登録', function(done) {
+            var user = new User({
+                username: 'testUser',
+                password: 'testPass',
 
-    })
-})
+            });
+
+            user.save(function(err, result) {
+                if (err) {
+                    console.log(err);
+                    throw new Error(err);
+                }
+                done();
+            }) ;
+        });
+    });
+});
