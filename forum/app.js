@@ -33,7 +33,7 @@ app.configure(function(){
     app.use(app.router);
     app.use(express.static(__dirname + '/public'));
     app.use(lib.loginRequired);
-    
+
     app.redirect('login', '/sessions/new');
     app.redirect('top', '/topics');
 });
@@ -47,7 +47,7 @@ app.configure('development', function(){
 
 //本番環境
 app.configure('production', function(){
-    models.init('localhost', forum_prod);
+    models.init('localhost', 'forum_prod');
     app.use(logger.accessConfig);
     // app.use(express.errorHandler());
 });

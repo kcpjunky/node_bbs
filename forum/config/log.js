@@ -1,8 +1,8 @@
 var log4js = require('log4js');
 
 //設定ファイル読み込み
-log4js.configure('config/log4js.json');
-
+log4js.configure(__dirname + '/log4js.json');
+//log4js.configure('/config/log4js.json');
 exports.logger = log4js.getLogger({
 	"appenders": [
 		{
