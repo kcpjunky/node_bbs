@@ -102,10 +102,11 @@ app.post('/sessions', routes.sessions.create);
 app.error(lib.notFoundHandler);
 app.error(lib.errorHandler);
 
-app.listen(3000);
+app.listen(3000,'localhost',function(){
 
-console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
-logger.fatal('tet');
+    console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
+});
+
 
 //テスト用
 module.exports = app;

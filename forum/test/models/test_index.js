@@ -6,7 +6,7 @@ var expect = require('expect.js');
 describe('models/index.js', function() {
     describe('userModel.setPassword',function() {
 
-        it('setPassword(p1,p2) p1===p2のときtrueをかえす', function() {
+        it('setPassword(p1,p2) p1===p2のときtrueをかえす', function(done) {
             var User = models.UserModel;
 
             var user = new User();
@@ -14,10 +14,12 @@ describe('models/index.js', function() {
             var p2 = 'testtesttest';
 
             expect(user.setPassword(p1, p2)).to.be(true);
-
+            expect(user).to.have.property('password');
+            expect(user.password).to.be(p1);
+            done();
         });
 
-        it('setPassword(p1,p2) p1!==p2のときfalseをかえす', function() {
+        it('setPassword(p1,p2) p1!==p2のときfalseをかえす', function(done) {
             var User = models.UserModel;
 
             var user = new User();
@@ -25,6 +27,7 @@ describe('models/index.js', function() {
             var p2 = 'testtesttes';
 
             expect(user.setPassword(p1, p2)).to.be(false);
+            done();
 
         });
 

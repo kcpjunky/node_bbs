@@ -26,12 +26,12 @@ describe('users/index create()', function() {
         user.remove(function(err, user) {
             if (err) {
                 console.log('error');
-                return handleError(err);
+                return done(err);
             }
 
             console.log("existed date delete");
-            user.findById(user._id, function(err, user) {
-                console.log(user);
+            user.findById(user._id, function(err, result) {
+                console.log(result);
             });
         });
 
@@ -82,6 +82,7 @@ describe('users/index create()', function() {
         var user = new User({
             username: condition.username
         });
+        user.setPassword(password, password2);
         console.log(user);
         var res = {};
         var next = {};

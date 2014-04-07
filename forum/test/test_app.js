@@ -2,6 +2,11 @@ var request = require('supertest');
 var app = require('../app');
 var expect = require('expect.js');
 
+
+var models = require('../models'),
+    lib = require('../lib'),
+    User = models.UserModel,
+    Post = models.PostModel;
 /**
  * '/'にアクセスすると'/sessions/new'に遷移する
  *
@@ -66,14 +71,46 @@ describe('/sessions/destroy', function() {
     });
 
     it('when GET /topics, should return 200', function (done) {
-    request(app)
-      .get("/topics")
-      .expect(200)
-      .end(function (err, res) {
-        if(err) {
-          console.log("test error" + err);
-        }
+        request(app)
+            .get("/topics")
+            .expect(200)
+            .end(function (err, res) {
+                if(err) {
+                    console.log("test error" + err);
+                }
         done();
       });
   });
+
+  describe('POST /users',function() {
+
+      before(function(done) {
+          models.init('localhost', 'forum_test');
+          User.remove(function(err, User) {
+              if (err) return handleError(err);
+
+              done();
+          });
+      });
+      it('/usersにたいしてPOSTするとuser登録', function(done) {
+          var postData = {
+              username : "postUser",
+              password : "postpass",
+              password2 : "postpass"
+          };
+
+          request(app)
+              .post('/users')
+              .send({username: 'postUser', password : 'postPass', password2: 'postPass'})
+              .expect(302)
+              .end(function(err, res) {
+                  if (err) {
+                      console.log(err);
+                      return done(err);
+                  }
+                  console.log("aaaa");
+                  done();
+              });
+      });
+  })
 });

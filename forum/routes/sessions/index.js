@@ -31,7 +31,6 @@ exports.create = function(req, res) {
 	var rememberme = req.param('rememberme');
 	User.findOne(condition, function(err, result) {
 		if (err) {
-			console.log(err.name);
 			logger.error(err);
 			return next(err);
 		}

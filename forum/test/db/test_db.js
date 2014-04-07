@@ -14,7 +14,9 @@ describe('dbModel', function() {
         beforeEach(function(done) {
             models.init('localhost', 'forum_test');
             User.remove(function(err, User) {
-                if (err) return handleError(err);
+                if (err) {
+                    return done(err);
+                }
 
                 done();
             });
@@ -28,10 +30,11 @@ describe('dbModel', function() {
 
             user.save(function(err, result) {
                 if (err) {
-                    console.log(err);
-                    throw new Error(err);
+                    return done(err);
                 }
+                expect(result).to.be.an('object');
                 expect(result.username).to.be('testUser');
+                expect(result.password).to.be('testPass');
                 done();
             });
         });
@@ -48,7 +51,9 @@ describe('dbModel', function() {
 
             models.init('localhost', 'forum_test');
             User.remove(function(err, User) {
-                if (err) return handleError(err);
+                if (err) {
+                    return done(err);
+                }
 
             });
             user.save(function(err, result) {
@@ -81,7 +86,9 @@ describe('dbModel', function() {
         beforeEach(function(done) {
             models.init('localhost', 'forum_test');
             Post.remove(function(err, User) {
-                if (err) return handleError(err);
+                if (err) {
+                    return done(err);
+                }
 
                 done();
             });
@@ -89,7 +96,7 @@ describe('dbModel', function() {
 
         it ('toipc_id,title,detailが指定されていたら登録できる', function(done) {
             var post = new Post({
-                topic_id : 314918,
+                "topic_id" : 314918,
                 title: 'testPost',
                 detail: 'hello world',
                 username : 'test user'
@@ -97,9 +104,12 @@ describe('dbModel', function() {
 
             post.save(function(err,result) {
                 if (err) {
-                    console.log(err);
-                    throw new Error(err);
+                    return done(err);
                 }
+                expect(result).to.be.an('object');
+                expect(result.title).to.be('testPost');
+                expect(result.detail).to.be('hello world');
+                expect(result.username).to.be('test user');
                 done();
             });
         });
@@ -113,23 +123,27 @@ describe('dbModel', function() {
 
             post.save(function(err,result) {
                 if (err) {
-                    console.log(err);
-                    throw new Error(err);
+                    done(err);
                 }
+                expect(result.title).to.be('testPost');
                 expect(result.username).to.be('anonymous');
                 done();
             });
         });
 
-        it ('titleが指定されなかったら 保存できない', function(done) {
+        it ('titleが指定されなかったら ValidationErrorで保存できない', function(done) {
             var post = new Post({
                 topic_id : 314918,
                 detail: 'hello world3',
             });
 
             post.save(function(err,result) {
-                expect(err).not.to.be(null);
-                done();
+                if (err) {
+                    console.log(err);
+                    expect(err.name).to.be('ValidationError');
+                    done();
+                }
+
             });
         });
     });
