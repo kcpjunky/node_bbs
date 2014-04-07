@@ -13,6 +13,12 @@ describe('login test', function() {
     var testUser = superagent.agent();
     beforeEach(function(done) {
         models.init('localhost', 'forum_dev');
+        user = new User({
+            username: 'tt',
+            password: 'tt'
+        });
+
+        user.save();
         done();
     });
     it ('dbのusersドキュメントに登録されたユーザとパスワードをpostするとloginできる', function(done) {
@@ -32,7 +38,23 @@ describe('login test', function() {
             });
     });
 
-    it ('dbのusersドキュメントに登録されたユーザとパスワードをpostするとloginできる', function(done) {
+    it ('dbのusersドキュメントに登録されたユーザで、パスワードが違うとログインできない', function(done) {
+
+        testUser
+            .post('http://localhost:3000/sessions')
+            .send({
+                username: 'tt',
+                password: 't',
+                rememberme: true
+            }).end(function(err, res) {
+                expect(err).to.be(null);
+                expect(res.redirects).not.to.be.empty();
+                console.log(res.redirects);
+                expect(res.redirects[0]).to.be('http://localhost:3000/');
+                done();
+            });
+    });
+    it ('dbのusersドキュメントに登録されてないユーザだとログイン失敗', function(done) {
 
         testUser
             .post('http://localhost:3000/sessions')
