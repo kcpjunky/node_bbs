@@ -1,5 +1,8 @@
 var mongoose = require('mongoose'),
 	utils = require('CONNECT').utils;
+
+var crypto = require('crypto');
+
 exports.init = function(host, db) {
 	mongoose.connect('mongodb://' + host + '/' + db);
 };
@@ -42,7 +45,10 @@ UserSchema.methods.setPassword = function(password, password2) {
 	console.log("set password");
 	if (password === password2) {
 		console.log("password match");
-		this.password = password;
+
+		//パスワードセット
+		var hash = crypto.createHash('sha1').update(password).digest('hex');
+		this.password = hash;
 		return true;
 	}
 	this.invalidate('password_mismach', new Error('Password mismatch'));

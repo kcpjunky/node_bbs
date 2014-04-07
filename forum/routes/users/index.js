@@ -14,6 +14,8 @@ exports.create = function(req, res, next) {
 	var user = new User({
 		username: username
 	});
+
+	// パスワード一致していたらハッシュ化
 	user.setPassword(password, password2);
 	user.save(function(err, result) {
 		if (err) {
