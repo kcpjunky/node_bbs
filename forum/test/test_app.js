@@ -11,7 +11,7 @@ describe('/', function() {
         var expected_body = 'Hello World';
         request(app)
             .get('/')
-            .expect(200)
+            .expect(302)
             .end(function(err, res) {
                 if (err) {
                     throw err;
@@ -19,10 +19,10 @@ describe('/', function() {
             });
     });
 
-    it('/sessions/newに遷移', function() {
+    it('/sessions/newにリダイレクト', function() {
         request(app)
             .get('/')
-            .expect(200)
+            .expect(302)
             .end(function(err, res) {
                 if (err) {
                     throw err;
