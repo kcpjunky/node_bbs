@@ -1,5 +1,3 @@
-var logger = require('../config/log.js');
-
 /*
  * GET: topページ
  */

@@ -64,4 +64,16 @@ describe('/sessions/destroy', function() {
                 }
             });
     });
+
+    it('when GET /topics, should return 200', function (done) {
+    request(app)
+      .get("/topics")
+      .expect(200)
+      .end(function (err, res) {
+        if(err) {
+          console.log("test error" + err);
+        }
+        done();
+      });
+  });
 });

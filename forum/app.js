@@ -25,8 +25,8 @@ app.configure(function(){
         express.session({
             secret: 'your secret here',
 		    cookie: {
-		                maxAge: false
-			        }
+		        maxAge: false
+			}
         })
 	);
     app.use(express.static(__dirname + '/public'));

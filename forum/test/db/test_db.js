@@ -4,8 +4,6 @@ var models = require('../../models'),
     User = models.UserModel,
     Post = models.PostModel;
 
-var supertest = require('supertest');
-//var app = require('../../app');
 var service = require('../../routes/users/index.js');
 
 var expect = require('expect.js');
@@ -33,8 +31,9 @@ describe('dbModel', function() {
                     console.log(err);
                     throw new Error(err);
                 }
+                expect(result.username).to.be('testUser');
                 done();
-            }) ;
+            });
         });
 
     });
@@ -59,8 +58,9 @@ describe('dbModel', function() {
                 }
                 done();
             }) ;
-        })
-        it ('usernameが同じものを登録できない', function(done) {
+        });
+
+        it ('同じusernameが既に保存されていたら登録できない', function(done) {
             var user = new User({
                 username: 'testUser2',
                 password: 'testPass2',
