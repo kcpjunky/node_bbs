@@ -47,8 +47,10 @@ UserSchema.methods.setPassword = function(password, password2) {
 		console.log("password match");
 
 		//パスワードセット
-		var hash = crypto.createHash('sha1').update(password).digest('hex');
-		this.password = hash;
+		//var hash = crypto.createHash('sha1').update(password).digest('hex');
+		//this.password = hash;
+
+		this.password = password
 		return true;
 	}
 	this.invalidate('password_mismach', new Error('Password mismatch'));
