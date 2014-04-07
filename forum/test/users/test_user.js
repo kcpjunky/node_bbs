@@ -1,10 +1,12 @@
-var request = require('supertest');
+var supertest = require('supertest');
 //var app = require('../../app');
 var service = require('../../routes/users/index.js');
 
 var expect = require('expect.js');
 var models = require('../../models');
 var User = models.UserModel;
+
+var http = require('http');
 
 describe('users/index create()', function() {
     //beforeEachでdb初期化
@@ -23,9 +25,11 @@ describe('users/index create()', function() {
         //初期化のためユーザをdbから削除
         user.remove(function(err, user) {
             if (err) {
+                console.log('error');
                 return handleError(err);
             }
 
+            console.log("existed date delete");
             user.findById(user._id, function(err, user) {
                 console.log(user);
             });
@@ -45,8 +49,32 @@ describe('users/index create()', function() {
                 rememberme : true
             }
         };
+/*
+        var options = {
+            hostname: 'localhost',
+            port:3000,
+            path: 'users',
+            method: 'POST',
+            form: { username : 'testuser',
+                    password : 'password',
+                    password2 : 'password'
+            },
+            json: true
+        }
+        var req = http.request(options, function(res) {
+            var body = '';
+            res.on('data', function(chunk) {
+                body += chunk;
+            });
 
-
+            res.on('end', function() {
+                var name = JSON.parse(body).username;
+                console.log('name =' + name);
+            });
+        }).on('error', function(e) {
+            console.log(e.message);
+        });
+*/
         var condition = {
             username : req.param.username
         };
@@ -57,8 +85,11 @@ describe('users/index create()', function() {
         console.log(user);
         var res = {};
         var next = {};
-        var result = service.create;
-        
+        service.create(req,res,next, function(err) {
+            done();
+        });
+
+
         console.log(User.find(condition));
         User.findOne(condition, function(err, foundUser) {
             expect(foundUser.username).to.be(condition.username);

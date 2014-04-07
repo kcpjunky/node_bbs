@@ -29,9 +29,10 @@ app.configure(function(){
 			        }
         })
 	);
-
-    app.use(app.router);
     app.use(express.static(__dirname + '/public'));
+    app.use(lib.loginRequired);
+    app.use(app.router);
+
     app.use(lib.loginRequired);
 
     app.redirect('login', '/sessions/new');
@@ -69,17 +70,18 @@ app.dynamicHelpers(lib.dynamicHelpers);
 //app.get('/', lib.loginRequired, routes.index);
 app.get('/', routes.index);
 
-app.get('/topics/:topic_id?',lib.loginRequired, routes.topics.show);
+//app.get('/topics/:topic_id?',lib.loginRequired, routes.topics.show);
+app.get('/topics/:topic_id?', routes.topics.show);
 
 //個別ページ
-app.get('/topics/:topic_id/posts/:post_id', lib.loginRequired, routes.topics.posts.show);
-
+//app.get('/topics/:topic_id/posts/:post_id', lib.loginRequired, routes.topics.posts.show);
+app.get('/topics/:topic_id/posts/:post_id', routes.topics.posts.show);
 // 投稿
 app.post('/topics/:topic_id/posts', routes.topics.posts.create);
 
 // topic一覧
-app.get('/topics', lib.loginRequired, routes.topics.index);
-
+//app.get('/topics', lib.loginRequired, routes.topics.index);
+app.get('/topics', routes.topics.index);
 // 投稿削除
 app.del('/topics/:topic_id/posts/:post_id', routes.topics.posts.delete);
 

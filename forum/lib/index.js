@@ -109,7 +109,18 @@ exports.notFoundHandler = function(err, req, res, next) {
 //ログイン状態の判定
 exports.loginRequired = function(req, res, next) {
 	console.log("loginRequired");
+	//ログインなしでアクセスできるurl
+	var whiteList = {
+		'/sessions': 'POST',
+		'/sessions/new': 'GET',
+		'/sessions/destroy': 'GET',
+		'/users': 'POST'
+	};
 	if (req.session.username) {
+		return next();
+	}
+
+	if (whiteList[req.url] === req.method) {
 		return next();
 	}
 

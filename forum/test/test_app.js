@@ -19,11 +19,10 @@ describe('/', function() {
             });
     });
 
-    it('/sessions/newに遷移　title: Loginというぱらめーたを渡す', function() {
+    it('/sessions/newに遷移', function() {
         request(app)
             .get('/')
             .expect(200)
-            .expect(title, 'Login')
             .end(function(err, res) {
                 if (err) {
                     throw err;
