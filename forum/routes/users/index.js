@@ -36,7 +36,6 @@ exports.create = function(req, res, next) {
 					req.flash('registerErr', 'two passwords doesn\'t match!');
 				} else {
 					// その他エラー
-					console.log(err);
 					logger.fatal(err);
 					logger.fatal('unknown error has occured at user.save()');
 					req.flash('registerErr', 'check your inputs again!');
@@ -49,7 +48,6 @@ exports.create = function(req, res, next) {
 		}
 
 		if (rememberme) {
-			console.log("remember me");
 			var newtoken = {
 				username: result.username,
 				authcookie: result.authcookie
