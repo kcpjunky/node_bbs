@@ -1,4 +1,4 @@
-var supertest = require('supertest');
+/**var supertest = require('supertest');
 //var app = require('../../app');
 var service = require('../../routes/users/index.js');
 
@@ -74,7 +74,7 @@ describe('users/index create()', function() {
         }).on('error', function(e) {
             console.log(e.message);
         });
-*/
+
         var condition = {
             username : req.param.username
         };
@@ -106,3 +106,4 @@ describe('users/index create()', function() {
         done();
     })
 })
+*/

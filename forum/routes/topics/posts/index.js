@@ -9,11 +9,15 @@ var logger = require('../../../config/log.js');
  * 投稿を保存する
  */
 exports.create = function(req, res, next) {
+	console.log('--------------------------------');
 	console.log("topics/posts/create");
 	var topic_id = req.param('topic_id');
+	console.log('topicid = ' + topic_id);
 	var title = req.param('title');
+	console.log('title = ' + title);
 	var detail = req.param('detail');
-
+	console.log('detail = ' + detail);
+	var username = req.session.username || req.param('username');
 	// modelに値を割り当てる
 	var post = new PostModel({
 		topic_id: topic_id,
@@ -25,7 +29,7 @@ exports.create = function(req, res, next) {
 	post.save(function(err, result) {
 
 		if (err) {
-
+			console.log('save error');
 			if (err.name == 'ValidationError') {
 				logger.error('validation error occured');
 				req.flash('postErr', 'invalid input');

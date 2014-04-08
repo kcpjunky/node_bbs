@@ -97,18 +97,15 @@ exports.notFoundHandler = function(err, req, res, next) {
 		logger.error(err);
 		return next(err);
 	} else {
-
-			console.log(err);
-			logger.error(err);
-			logger.error("something is wrong");
-			return next(err);
+		logger.error(err);
+		logger.error("something is wrong");
+		return next(err);
 	}
 };
 
 //Route-Middleware
 //ログイン状態の判定
 exports.loginRequired = function(req, res, next) {
-	console.log("loginRequired");
 	//ログインなしでアクセスできるurl
 	var whiteList = {
 		'/sessions': 'POST',
@@ -117,6 +114,7 @@ exports.loginRequired = function(req, res, next) {
 		'/users': 'POST'
 	};
 	if (req.session.username) {
+		logger.info('session');
 		return next();
 	}
 
@@ -131,7 +129,7 @@ exports.loginRequired = function(req, res, next) {
 		logger.warn('there are no session and cookie : redirect to /sessions/new');
 		return res.redirect('/sessions/new');
 	}
-	console.log("check cookie");
+	logger.info("check cookie");
 	//cookieがある場合
 	var token = JSON.parse(req.cookies.authtoken);
 
@@ -142,7 +140,7 @@ exports.loginRequired = function(req, res, next) {
 
 	//cookieを用いて認証する
 	user.findOne(condition, function(err, result) {
-		console.log("user findone");
+		logger.info("user findone");
 		if (err) {
 			logger.error('error has occured at user.findOne');
 			return next(err);
@@ -159,7 +157,6 @@ exports.loginRequired = function(req, res, next) {
 		user.update(condition, update, function(err, numAffected) {
 			if (err) {
 				logger.warn(' update user data failed at User.update()')
-				console.log("next : User update");
 				return next(err);
 			}
 
@@ -169,7 +166,6 @@ exports.loginRequired = function(req, res, next) {
 				authcookie: update.authcookie
 
 			};
-			console.log("set cookie");
 			setCookie(res, JSON.stringify(newtoken));
 			next();
 		});

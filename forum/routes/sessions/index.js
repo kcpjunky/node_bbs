@@ -30,6 +30,7 @@ exports.create = function(req, res) {
 	};
 	var rememberme = req.param('rememberme');
 	User.findOne(condition, function(err, result) {
+		console.log('findone');
 		if (err) {
 			logger.error(err);
 			return next(err);

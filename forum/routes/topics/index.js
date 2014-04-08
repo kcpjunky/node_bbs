@@ -6,13 +6,13 @@ var models = require('../../models'),
 
 // ログ用モジュール
 var logger = require('../../config/log.js');
-//var topics = [
-//	{ url: '/topics/1', name: 'Connect' },
-//	{ url: '/topics/2', name: 'Express' },
-//	{ url: '/topics/3', name: 'Socket.IO' },
-//	{ url: '/topics/4', name: 'Mocha' },
-//	{ url: '/topics/5', name: 'Vows' }
-//];
+var topics = [
+	{ url: '/topics/1', name: 'Connect' },
+	{ url: '/topics/2', name: 'Express' },
+	{ url: '/topics/3', name: 'Socket.IO' },
+	{ url: '/topics/4', name: 'Mocha' },
+	{ url: '/topics/5', name: 'Vows' }
+];
 
 /**
  * topic一覧画面
@@ -36,7 +36,7 @@ exports.show = function(req, res, next) {
 
 	//topic_idを数字に変換する
 	var topic_id = parseInt(req.param('topic_id'), 10);
-
+	console.log('topic_id '+ topic_id);
 	if (!topic_id){
 		console.log("next");
 		return next();

@@ -147,4 +147,65 @@ describe('dbModel', function() {
             });
         });
     });
+
+    describe('select post', function() {
+        beforeEach(function(done) {
+            var i = 0;
+            models.init('localhost', 'forum_test');
+            Post.remove(function(err, result) {
+                if (err) {
+                    done(err);
+                }
+            });
+            for (i; i < 20; i++) {
+                post = new Post({
+                    topic_id : 1,
+                    title : 'title'+ i,
+                    detail: 'hello'+ i,
+                });
+                post.save(function(err) {
+                    if (err) {
+                        done(err);
+                    }
+
+                });
+            }
+            done();
+        });
+
+        it ('指定したtopic_idのポストを取得', function(done) {
+            condition = {
+                topic_id : 1
+            };
+            Post.findOne(condition, function(err, result) {
+                if (err) {
+                    done(err);
+                }
+
+                console.log(result);
+                console.log(typeof result);
+                expect(parseInt(result.topic_id)).to.be(1);
+                //done();
+            });
+            done();
+        });
+/**
+        it ('postsコレクションに入ってるtopic_id = 1のものの個数と、取得する個数が等しい', function(done) {
+            condition = {
+                topic_id : 1
+            };
+            var query = Post.find(condition);
+            query.count(function(err, count) {
+                if (err) {
+                    done(err);
+                }
+                expect(count).to.be(20);
+                done();
+            });
+        });
+*/
+
+
+
+    });
 });

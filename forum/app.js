@@ -29,11 +29,11 @@ app.configure(function(){
 			}
         })
 	);
-    app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/public'));
     app.use(lib.loginRequired);
     app.use(app.router);
 
-    app.use(lib.loginRequired);
+//    app.use(lib.loginRequired);
 
     app.redirect('login', '/sessions/new');
     app.redirect('top', '/topics');

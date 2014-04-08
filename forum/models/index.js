@@ -4,7 +4,13 @@ var mongoose = require('mongoose'),
 var crypto = require('crypto');
 
 exports.init = function(host, db) {
-	mongoose.connect('mongodb://' + host + '/' + db);
+	mongoose.connect('mongodb://' + host + '/' + db, function(err) {
+		if (err) {
+			console.log(err);
+		} else {
+			console.log('connection success');
+		}
+	});
 };
 
 exports.topics = [
