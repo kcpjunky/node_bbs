@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>chat</title>
+    <link rel='stylesheet' type="text/css" href="http://localhost:8080/Flat-UI-master/bootstrap/css/bootstrap.css" />
+    <link rel='stylesheet' type="text/css" href="/Flat-UI-master/css/flat-ui.css" />
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="http://localhost:8080/socket.io/socket.io.js"></script>
 
@@ -12,16 +14,30 @@
         margin:0;
         padding:0;
     }
+    div #msg_list {
+        border-style-top:solid;
+        border-style-right:double;
+        border-style-bottom:dotted;
+        border-style-left:dashed;
+    }
 </style>
 </head>
 <body>
-    <div id="msg_list" style="height: 300px; overflow:auto;"></div>
+<div id="msg_list" class="btn btn-block btn-hg btn-primary" style="border-width:20px;color:red;height: 300px; overflow:auto;bor"></div>
 
     <form action="" method="post" onsubmit="return false;">
         <input type="text" class="text" style="width:95%; padding:10px" id="message"/>
         <input type="submit" class="button" style="padding:10px" onclick="sendMessage();" value="みんなに送信" />
-        <input type="submit" class="button" style="padding:10px" onclick="sendBroadcast()" value="自分以外に送信" />
+        <input type="submit" class="button" style="padding:10px" onclick="sendBroadcast();" value="自分以外に送信" />
     </form>
+</div>
+<div id="test">
+    <div id="button">
+        <form action="" method="post" onsubmit="return false;">
+            <input type="hidden" id="ht" value="hidden text ">
+            <input type="submit" class="button" onclick="sendAlert();" value="alert" />
+        </form>
+    </div>
 </div>
 <script type="text/javascript">
 var socket = io.connect('http://localhost:8080');
@@ -30,6 +46,10 @@ socket.on("connect", function() {});
 socket.on("disconnect", function(client){});
 socket.on("S_to_C_message", function (data) {
     addMessage(data.value);
+});
+
+socket.on("bht", function(data) {
+    bht(data);
 });
 
 function sendMessage() {
@@ -47,6 +67,16 @@ function sendBroadcast() {
 function addMessage(value, color, size) {
     var msg = value.replace( /[!@%<>'"&|]/g, '');
     $("#msg_list").prepend("<div class='msg'>" + msg + "</div>");
+}
+
+function sendAlert() {
+    var ht = $("#ht").val();
+    socket.emit("ht", {value: ht});
+    alert(ht);
+}
+
+function bht(data) {
+    alert(data.value);
 }
 </script>
 </body>

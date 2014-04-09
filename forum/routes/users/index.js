@@ -41,12 +41,14 @@ exports.create = function(req, res, next) {
 					req.flash('registerErr', 'check your inputs again!');
 				}
 
+				// ユーザ登録フォームにリダイレクト
 				return res.redirect('back');
 			}
 
 			return next(err);
 		}
 
+		// セッションを有効にする場合の処理
 		if (rememberme) {
 			var newtoken = {
 				username: result.username,
