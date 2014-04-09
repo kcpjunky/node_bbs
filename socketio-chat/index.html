@@ -31,6 +31,7 @@
         <input type="submit" class="button" style="padding:10px" onclick="sendBroadcast();" value="自分以外に送信" />
     </form>
 </div>
+<div id="res"> </div>
 <div id="test">
     <div id="button">
         <form action="" method="post" onsubmit="return false;">
@@ -55,12 +56,14 @@ socket.on("bht", function(data) {
 function sendMessage() {
     var msg = $("#message").val();
     $("#message").val("");
+    $("#res").val("sendMessage");
     socket.emit("C_to_S_message", {value: msg});
 }
 
 function sendBroadcast() {
     var msg =$("#message").val();
     $("#message").val("");
+    $("#res").val("send BroadCast");
     socket.emit("C_to_S_broadcast", {value: msg});
 }
 
@@ -73,6 +76,7 @@ function sendAlert() {
     var ht = $("#ht").val();
     socket.emit("ht", {value: ht});
     alert(ht);
+    socket.emit("C_to_S_broadcast", {value: 'alertだれか押した'});
 }
 
 function bht(data) {
