@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>chat</title>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="http://localhost:8080/socket.io/socket.io.js"></script>
+
+<style>
+    *{
+        font-size:30px;
+        margin:0;
+        padding:0;
+    }
+</style>
+</head>
+<body>
+    <div id="msg_list" style="height: 300px; overflow:auto;"></div>
+
+    <form action="" method="post" onsubmit="return false;">
+        <input type="text" class="text" style="width:95%; padding:10px" id="message"/>
+        <input type="submit" class="button" style="padding:10px" onclick="sendMessage();" value="みんなに送信" />
+        <input type="submit" class="button" style="padding:10px" onclick="sendBroadcast()" value="自分以外に送信" />
+    </form>
+</div>
+<script type="text/javascript">
+var socket = io.connect('http://localhost:8080');
+
+socket.on("connect", function() {});
+socket.on("disconnect", function(client){});
+socket.on("S_to_C_message", function (data) {
+    addMessage(data.value);
+});
+
+function sendMessage() {
+    var msg = $("#message").val();
+    $("#message").val("");
+    socket.emit("C_to_S_message", {value: msg});
+}
+
+function sendBroadcast() {
+    var msg =$("#message").val();
+    $("#message").val("");
+    socket.emit("C_to_S_broadcast", {value: msg});
+}
+
+function addMessage(value, color, size) {
+    var msg = value.replace( /[!@%<>'"&|]/g, '');
+    $("#msg_list").prepend("<div class='msg'>" + msg + "</div>");
+}
+</script>
+</body>
+</html>
